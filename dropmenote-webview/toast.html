@@ -1,0 +1,14 @@
+<md-toast style="top:0; bottom:auto;" 
+        ng-class="{' ng-scope md-top md-center md-toast-error' : toastType == 'ERROR',
+                    'ng-scope md-top md-center md-toast-info'   : toastType == 'INFO',
+                    'ng-scope md-top md-center md-toast-message' : toastType == 'MESSAGE'}">
+    <div ng-click="click_hideToast()">
+        <div class="md-toast-label">{{toastMessage}}</div>
+        <div class="md-toast-description"> {{toastDescription}}</div>
+        <div ng-if="toastType=='MESSAGE'" 
+            style="right: 0px; width: 41px;  padding: 16px 0px 0px 20px; top: 1px; position: absolute; height: 100%;">
+            <img src="app/assets/img/arrowbutton_white.svg" height="25px" ng-click="click_chat()"/>
+        </div>
+    </div>
+    
+</md-toast>

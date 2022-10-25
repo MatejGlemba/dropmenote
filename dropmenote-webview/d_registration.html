@@ -1,0 +1,78 @@
+<div class="scrollable">
+    <div class="scrollable-content section bck-white">
+        <div class="md-primary pull-left navbar-left-menu-button">
+            <div ng-click="click_backToLogin()" name="appBackButton">
+                <img src="app/assets/img/arrowbutton_blue.svg" style="transform: rotate(180deg); height:20px; margin-right: 5px;"/> 
+                <span style="color:#249fda;">Login</span>
+            </div>
+        </div> 
+
+        <img class="header-image"
+             src="app/assets/img/logo_blue.svg"
+             height="30%" style="margin-top:70px"
+             />
+
+        <div class="dialog-center-text">
+            <div style="font-size: 20px; font-weight: 500;">Registration</div>
+            Enter your email, password and repeat password. Click on create account.
+        </div>
+
+        <form role="form" name="registration_form" autocomplete="off">
+            <fieldset>
+                <div class="form-group has-success has-feedback">
+                    <input type="email" validate-email
+                           name="registration_login"
+                           ng-model="registration.login"
+                           class="form-control"
+                           placeholder="Registration email"
+                           required autocomplete="off">
+                    <div ng-messages="registration_form.registration_login.$error" ng-if="registration_form.registration_login.$dirty">
+                        <div class="form-msg-error" ng-message="required">
+                            This field is required
+                        </div>
+                        <div class="form-msg-error" ng-message="email">
+                            Invalid email
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <div class="form-group has-success has-feedback">
+                    <input type="password"
+                           name="registration_password"
+                           ng-model="registration.password"
+                           class="form-control"
+                           placeholder="Enter your password"
+                           required autocomplete="off">
+                    <div ng-messages="registration_form.registration_password.$error" ng-if="registration_form.registration_password.$dirty">
+                        <div class="form-msg-error" ng-message="required">
+                            This field is required
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group has-success has-feedback">
+                    <input type="password"
+                           name="registration_repeatpassword"
+                           ng-model="registration.repeatpassword"
+                           class="form-control"
+                           placeholder="Repeat your password"
+                           required autocomplete="off">
+                    <div ng-messages="registration_form.registration_repeatpassword.$error" ng-if="registration_form.registration_repeatpassword.$dirty">
+                        <div class="form-msg-error" ng-message="required">
+                            This field is required
+                        </div>
+                        <div class="form-msg-error" ng-message="passwordMismatch">
+                            Passwords do not match
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+
+            <div style="margin: 25px 24px 10px 24px;">
+                <div class="btn btn-primary btn-block" ng-click="click_registration_submit(registration, registration_form)">
+                    Create account
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+

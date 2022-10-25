@@ -1,0 +1,25 @@
+<div class="navbar navbar-absolute-bottom" ng-controller="SidebarController">
+    <div class="btn-group justified footer" style="background:#f4f4f4">
+        <a class="list-group-item footer-element" href="#/inbox?qrcode_id=&qrcode_name=">
+            <div><img src="app/assets/img/footer_menu/footer_inbox_{{isActive('/inbox')|| isActive('/')}}.svg" class="footer-icon" /></div>
+            <div class="even-smaller-text footer-icon-desc  {{isActive('/inbox')|| isActive('/') ? 'sidebar-selected-title' : ''}}">Inbox</div>
+        </a>
+        <a class="list-group-item footer-element" href="#/qrcodelist">
+            <div><img src="app/assets/img/footer_menu/footer_qrlist_{{isActive('/qrcodelist') }}.svg" class="footer-icon" /></div>
+            <div class="even-smaller-text footer-icon-desc {{isActive('/qrcodelist')  ? 'sidebar-selected-title' : ''}}">Items</div>
+        </a>
+        <div id="qrScanForAppFooter" class="list-group-item footer-element" onclick="sendMessageToCn1('openScanner#STARBUG#'); document.getElementById('qrScanForApp').click();">
+        <!-- <div id="qrScanForAppFooter" class="list-group-item footer-element" onclick="sendMessageToCn1('openScanner#STARBUG#');"> -->
+            <div><img src="app/assets/img/footer_menu/footer_scanqr.svg" class="scan-icon"/></div>
+            <div class="even-smaller-text footer-icon-desc {{isActive('/infoqrcode') ? 'sidebar-selected-title' : ''}}">Scan</div>
+        </div>
+        <a class="list-group-item footer-element" href="#/setting">
+            <div><img src="app/assets/img/footer_menu/footer_user_{{isActive('/setting')}}.svg" class="footer-icon" /></div>
+            <div class="even-smaller-text footer-icon-desc {{isActive('/setting') ? 'sidebar-selected-title' : ''}}">Profile</div>
+        </a>
+        <a ui-toggle="uiSidebarRight" class="list-group-item footer-element">
+            <div><img src="app/assets/img/footer_menu/footer_menu_{{isActive('/about') || isActive('/guide')}}.svg" class="footer-icon" /></div>
+            <div class="even-smaller-text footer-icon-desc {{isActive('/about') || isActive('/guide') ? 'sidebar-selected-title' : ''}}" style="margin-top: 5px">More</div>
+        </a>
+    </div>
+</div>

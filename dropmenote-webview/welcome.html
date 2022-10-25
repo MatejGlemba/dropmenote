@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+    </head>
+    <body>
+        <script>
+            // PetoD local testing
+             //var baseUrl = "http://185.28.100.172:9080/";
+             //var tutorialUrl = "http://185.28.100.172:9080/tutorial.html?di=";
+
+            // localhost
+            //var baseUrl = "http://localhost:65040/";
+            //var tutorialUrl = "http://localhost:65040/tutorial.html?di=";
+
+            // production
+            // var baseUrl = "https://app.dropmenote.com/";
+            // var tutorialUrl = "https://app.dropmenote.com/tutorial.html?di=";
+
+            var baseUrl = "http://phu.starbug.eu/abo/";
+            var tutorialUrl = "http://phu.starbug.eu/abo/tutorial.html?di=";
+
+            function getUrlParam(paramName) {
+                var vars = {};
+                var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
+                    vars[key] = value;
+                });
+                // return vars[paramName];
+                return decodeURIComponent((vars[paramName] + "").replace(/\+/g, "%20"));
+            }
+
+            function postToCN1(msg) {
+                //TODELETE
+                if (window.cn1PostMessage) {
+                    // Case 1: Running inside native app in a WebView
+                    window.cn1PostMessage(msg);
+                } else {
+                    // Case 2: Running inside a Javascript app in an iframe
+                    window.parent.postMessage(msg, "*");
+                }
+            }
+
+            function redirect() {
+                var cookieToken = getCookie("dpn_token");
+                var deviceId = getUrlParam("di");
+                var version = getUrlParam("v");
+                postToCN1("welcome.html " + deviceId); //TODELETE
+                if (!deviceId || deviceId == "undefined") {
+                    deviceId = "";
+                }
+                if (!version) {
+                    version = new Date().getTime();
+                }
+                if (cookieToken) {
+                    // window.open(baseUrl + "?v=" + version + "&di=" + deviceId + "#/qrcodelist", "_self");
+                    window.open(baseUrl+"?qrcode_id=&qrcode_name=")
+                    //window.open(baseUrl + "#/inbox?v=" + version + "&di=" + deviceId, "_self");
+                } else {
+                    window.open(tutorialUrl + deviceId + "&v=" + version, "_self");
+                }
+            }
+            function getCookie(name) {
+                return localStorage.getItem(name);
+            }
+            redirect();
+        </script>
+    </body>
+</html>

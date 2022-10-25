@@ -1,0 +1,68 @@
+<div ng-controller="ChatController">
+    <div ui-content-for="header_div" class="chat-header">  
+        <div>
+            <div>
+                <div class="navbar-left-menu-button">
+                    <button class="navbar-backbutton" ng-click="click_back()" name="appBackButton" >
+                        <img style="height: 15px;vertical-align: text-bottom" src="app/assets/img/others/backbutton.svg"/> 
+                        <span class="navbar-backbutton-text">Back</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="pull-right small-headline navbar-right-group">
+                <div ng-click="click_addToBlacklist()" 
+                     ng-if="token && blacklistObj">
+                    <span class="navbar-backbutton-text">Blacklist</span>
+                    <img class="navbar-right-icon" src="app/assets/img/starbug_navbar_add.svg"/>
+                </div>
+            </div>
+
+            <h4 class="headline" style="margin-bottom: 5px; margin-left: 15px;">             
+                {{qrCodeName ? qrCodeName : " "}}&nbsp;
+            </h4>
+
+            <div class="normal-text" style="margin-top: 0px; margin-left: 15px; margin-bottom: 15px;" ng-click="click_openQRCodeInfo()">
+                <h6>Communicate with DMN code users</h6>
+            </div>
+        </div>
+    </div>
+    
+
+    <div ui-content-for="footer-navigation">
+        <div class="navbar navbar-app navbar-absolute-bottom chat-footer">
+            <div class="chat-send">
+                <textarea id="chatInputTextarea" class="chat-send-input" type="text" name="myMessage"
+                          ng-model="myMessage" placeholder="Write a message..." rows = "1"  autocomplete="off" disabled>
+                </textarea>
+                <img class="chat-send-button" ng-click="sendMsg(myMessage)" src="app/assets/img/chat/sendbutton.svg"/>
+            </div>
+        </div>
+    </div>
+    <div class="scrollable page-fade-animation chat-bg-wrap">
+        <div class="scrollable-content section background chat-bg" id="scrollableDivChat" scroll-glue>
+            <div  class="chat-group" ng-repeat="msg in msgList" ng-if="msg.message!=undefined" tabindex="0">
+                <div ng-class="{'chat-icon-left': msg.position=='LEFT', 'chat-icon-right': msg.position=='RIGHT'}">
+                    <img ng-class="{'chat-icon-img chat-icon-admin-img-padding chat-icon-admin-img': (msg.userType=='ADMIN' && msg.image), 
+                                   'chat-icon-img chat-icon-admin-img-padding chat-icon-shared-img': (msg.userType=='SHARED' && msg.image),
+                                   'chat-icon-img chat-icon-admin-img-padding chat-icon-admin-img chat-icon-no-image': (msg.userType=='ADMIN' && !msg.image), 
+                                   'chat-icon-img chat-icon-admin-img-padding chat-icon-shared-img chat-icon-no-image': (msg.userType=='SHARED' && !msg.image),
+                                   'chat-icon-img chat-icon-guest-img': msg.userType=='GUEST' || msg.userType==undefined || msg.userType==null}" 
+                         src="app/assets/img/qr_code_noicon.svg" 
+                         ng-src="{{get_image_href(msg)}}"/>
+                </div>
+                <div class="chat-group-message-text chat-group-username chat-group-username-{{msg.position}}">
+                    <span class="chat-group-message-time" ng-if="msg.position=='RIGHT'">{{msg.date}}</span>
+                    <span class="small-text">{{(msg.alias == undefined || msg.alias == null || msg.alias == '') ? "Anonymous" : msg.alias}}</span>
+                    <span class="small-text" ng-if="msg.position=='LEFT'" style="color:black;"> (you)</span>
+                    <span class="chat-group-message-time" ng-if="msg.position=='LEFT'">{{msg.date}}</span>
+                </div>
+                <div class="chat-group-message-{{msg.position}}">
+                    <label class="chat-group-message-text" style="text-align: left;">{{msg.message}}</label><br />
+                </div>
+            </div>
+            <div class="chat-bottom-space"></div>
+        </div>
+    </div>
+
+</div>
