@@ -1,0 +1,39 @@
+<div class="scrollable">
+    <div class="scrollable-content section bck-white">
+
+        <div class="md-primary pull-right navbar-left-menu-button">
+            <div ng-if="token && token != 'undefined' && token != 'null'" ng-click="closeDialog()" name="appBackButton">
+                <span style="color: #262525; font-weight: 300;">Back</span> 
+                <img src="app/assets/img/others/cross_gray.svg" height="20px"/>
+            </div>
+        </div> 
+
+        <img class="header-image"
+             src="app/assets/img/logo_blue.svg"
+             height="30%" style="margin-top:70px"/>
+
+        <div style="margin: 25px; text-align: center;">
+            <div style="font-size: 20px; font-weight: 500;">DMN Code not found</div>
+            DMN Code not found. Try scanning the DMN Code again.
+        </div>
+
+        <div ng-if="!(token && token != 'undefined' && token != 'null')" class="qrcodenotfound-dialog-footer-text">
+            <span>Visit our homepage<br><a href="https://www.dropmenote.com">https://www.dropmenote.com</a><br>
+                Or download our app from App Store or Google Play.
+            </span>
+        </div>
+
+        <div ng-if="!(token && token != 'undefined' && token != 'null')" class="install-dialog-footer">
+            <a href="https://apps.apple.com/sk/app/dropmenote/id1508122319" target="_blank">
+                <div>
+                    <img src="app/assets/img/d_installapp/apple_badge.svg" height="65px"/>
+                </div>
+            </a>
+            <a href="http://play.google.com/store/apps/details?id=eu.starbug.dropmenote" target="_blank">
+                <div>
+                    <img src="app/assets/img/d_installapp/googleplay_badge.svg" height="65px"/>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>

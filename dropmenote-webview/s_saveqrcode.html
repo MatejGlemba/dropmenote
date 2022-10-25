@@ -1,0 +1,280 @@
+<div ng-controller="SaveqrcodeController"> 
+    <div>
+        <div ui-content-for="title">
+            {{qrcode.id > 0 ? qrcode.name + '&nbsp' : 'Create DMN Code'}}
+        </div>
+        <div ui-content-for="title_description">
+            {{qrcode.id > 0 ? 'Update your DMN Code' : 'Fill all required fileds and press Create button'}}
+        </div>
+    </div>
+    <div ui-content-for="title_navigation">
+        <div class="navbar-left-menu-button">
+            <button class="navbar-backbutton" ng-click="click_back()"  name="appBackButton">
+                <img style="height: 15px;vertical-align: text-bottom" src="app/assets/img/others/backbutton.svg"/> 
+                <span class="navbar-backbutton-text">Items</span>
+            </button>
+        </div>  
+    </div>   
+    <div ui-content-for="title_navigation_right">
+        <div ng-if="qrcode.id == 0" ng-click="click_saveqrcode_submit(qrcode)" style="display: none;" 
+            ng-class="{'shown-element' : qrcode.id == 0 && serviceFinished}">
+            <span class="navbar-savebutton-text"><img style="height: 19px; padding-right: 4px;" src="app/assets/img/diskette.svg"/> {{ qrcode.id > 0 ? 'Update' : 'Create'}}</span>
+        </div>
+    </div>  
+
+    <div ui-content-for="footer-navigation">
+        <div ng-include="'footer.html'" id="footerDiv"></div>
+    </div>
+
+    <div class="saveqrcode-header-button-group" ng-if="qrcode.id > 0" id="headerQRcodeDiv">
+        <table style="width: 100%;">
+            <tbody>
+                <tr>
+                    <td class="saveqrcode-header-button">
+                        <div class="saveqrcode-header-button-content" ng-click="call_sendQrByEmail()">
+                            <img class="saveqrcode-header-button-img" src="app/assets/img/save_qrcode/send_qr.svg" height="20px"/>
+                            <span class="saveqrcode-header-button-text">Download</span>
+                        </div>
+                    </td>
+                    <td class="saveqrcode-header-button">
+                        <a href="#/qrcodeshare?qrcode_id={{qrcode.id}}">
+                            <div class="saveqrcode-header-button-content">
+                                <img class="saveqrcode-header-button-img" src="app/assets/img/save_qrcode/share_qr.svg" height="20px"/>
+                                <span class="saveqrcode-header-button-text">Share</span>
+                            </div>
+                        </a>
+                    </td>
+                    <td class="saveqrcode-header-button" style="border-right:none;">
+                        <a  href="#/inbox?qrcode_id={{qrcode.id}}&qrcode_name={{qrcode.name}}">
+                            <div class="saveqrcode-header-button-content">
+                                <img class="saveqrcode-header-button-img" src="app/assets/img/save_qrcode/show_inbox.svg" height="25px" width="25px"/>
+                                <span class="saveqrcode-header-button-text">Inbox</span>
+                            </div>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="scrollable page-fade-animation" >
+        <div class="scrollable-content section background">
+
+            <div class="saveqrcode-top-spacer" ng-if="qrcode.id > 0"></div>
+
+            <form role="form" name="saveqrcode_form">
+                <fieldset>
+                    <div class="saveqrcode-group">
+                        <label class="saveqrcode-label-form">Name</label>
+                        <div class="saveqrcode-group-inner">
+                            <input id="saveqrcode_nameInput" class="form-control input-flat" type="text" name="qrcode_name" ng-model="qrcode.name"
+                                   placeholder="DMN name displayed to users" required
+                                   ng-change="autosave();" disabled  autocomplete="off" maxlength="23"/>
+                            <div ng-messages="saveqrcode_form.qrcode_name.$error" ng-if="saveqrcode_form.qrcode_name.$dirty">
+                                <div class="form-msg-error" ng-message="required"> This field is required </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="saveqrcode-group">
+                        <label class="saveqrcode-label-form">Alias</label>
+                        <div class="saveqrcode-group-inner">
+                            <input id="saveqrcode_aliasInput"  class="form-control input-flat" type="text" name="qrcode_alias" ng-model="qrcode.ownerAlias"
+                                   placeholder="Your name in chat" required
+                                   ng-change="autosave();" disabled  autocomplete="off" maxlength="23"/>
+                            <div ng-messages="saveqrcode_form.qrcode_alias.$error"  ng-if="saveqrcode_form.qrcode_alias.$dirty" >
+                                <div class="form-msg-error" ng-message="required"> This field is required </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="saveqrcode-group">
+                        <label class="saveqrcode-label-form">Description</label>
+                        <div class="saveqrcode-group-inner">
+                            <text-angular id="saveqrcode_descriptionInput"  class="form-control edit-buttons " name="qrcode_description" rows="4" cols="50"
+                                      ng-model="qrcode.description" placeholder="Description of what your DMN code is and what information you want to share for the user after the DMN code is scanned."
+                                      style="height: auto !important" disabled  autocomplete="off" maxlength="2000"
+                                      ng-change="autosave();"></text-angular>
+                        </div>
+                    </div>
+                    <div class="saveqrcode-group">
+                        <label class="saveqrcode-label-form">Website</label>
+                        <div class="saveqrcode-group-inner">
+                            <input id="saveqrcode_linkInput" class="form-control input-flat" type="text" name="qrcode_link" ng-model="qrcode.link"
+                                   placeholder="DMN website displayed to users"
+                                   ng-change="autosave();"  autocomplete="off" maxlength="23"/>
+                        </div>
+                    </div>
+                    <div class="saveqrcode-group">
+                        <div>
+                            <label class="saveqrcode-label-form saveqrcode-label-photo">Photo</label>
+                            <div class="saveqrcode-button-delete-photo" ng-show="qrcode.photo" ng-click="click_deletePhoto();">
+                                <span class="saveqrcode-button-delete-text">Delete photo</span>
+                                <img src="app/assets/img/inbox/cross_red.svg" class="saveqrcode-img-delete"/>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <img id="qrPhotoUploadImageForApp" data-ng-src="{{qrcode.photo}}" width="100%" ng-show="qrcode.photo"/> 
+                        </div>
+                        <input id="qrPhotoUploadButtonForApp" onclick="sendMessageToCn1('openGallery#STARBUG#');" type="file" class="form-control input-flat saveqrcode-setting-bottom saveqrcode-setting-top" accept="image/x-png,image/bmp,image/jpeg,image/jpg" 
+                               fileread="qrcode.photo" />
+                    </div>
+
+                    <!-- <div class="saveqrcode-group">
+                        <label class="saveqrcode-label-form">Chat icon</label>
+                        <div class="saveqrcode-group-inner" ui-swipe-right="">
+                            <table class="universal-table">
+                                <tr>
+                                    <td class="saveqrcode-chat-type-arrow saveqrcode-chat-type-arrow-left" ng-click="scrollLeft()">
+                                        <img class="saveqrcode-chat-type-arrow saveqrcode-chat-type-arrow-left" src="app/assets/img/others/left_arrow.svg" height="30px"/>
+                                    </td>
+                                    <td class="saveqrcode-chat-type-scroll" id="saveqrcode_scroll_container">
+                                        <div class="saveqrcode-chat-type">
+                                            <span id="saveqrcode_scroll_SPORT" class="saveqrcode-qrcode-type-img" ng-click="click_saveqrcode(qrcode)">
+                                                <img src="app/assets/img/save_qrcode/qrchat_ball.svg" 
+                                                     ng-if="qrcode.icon != 'SPORT'" ng-click="qrcode.icon='SPORT'" height="60px" />
+                                                <img src="app/assets/img/save_qrcode/qrchat_ball_selected.svg" 
+                                                     ng-if="qrcode.icon == 'SPORT'"  height="60px"  />
+                                            </span>
+                                            <span id="saveqrcode_scroll_FASHION" class="saveqrcode-qrcode-type-img" ng-click="click_saveqrcode(qrcode)">
+                                                <img src="app/assets/img/save_qrcode/qrchat_figurine.svg" 
+                                                     ng-if="qrcode.icon != 'FASHION'" ng-click="qrcode.icon='FASHION'" height="60px" />
+                                                <img src="app/assets/img/save_qrcode/qrchat_figurine_selected.svg" 
+                                                     ng-if="qrcode.icon == 'FASHION'"  height="60px"  />
+                                            </span>
+                                            <span  id="saveqrcode_scroll_MEDICINE" class="saveqrcode-qrcode-type-img" ng-click="click_saveqrcode(qrcode)">
+                                                <img src="app/assets/img/save_qrcode/qrchat_heart.svg"
+                                                     ng-if="qrcode.icon != 'MEDICINE'" ng-click="qrcode.icon='MEDICINE'" height="60px" />
+                                                <img src="app/assets/img/save_qrcode/qrchat_heart_selected.svg" 
+                                                     ng-if="qrcode.icon == 'MEDICINE'"  height="60px"  />
+                                            </span>
+                                            <span  id="saveqrcode_scroll_TECHNICS" class="saveqrcode-qrcode-type-img" ng-click="click_saveqrcode(qrcode)">
+                                                <img src="app/assets/img/save_qrcode/qrchat_monitor.svg" 
+                                                     ng-if="qrcode.icon != 'TECHNICS'" ng-click="qrcode.icon='TECHNICS'" height="60px" />
+                                                <img src="app/assets/img/save_qrcode/qrchat_monitor_selected.svg" 
+                                                     ng-if="qrcode.icon == 'TECHNICS'"  height="60px"  />
+                                            </span>
+                                            <span  id="saveqrcode_scroll_ART" class="saveqrcode-qrcode-type-img" ng-click="click_saveqrcode(qrcode)">
+                                                <img src="app/assets/img/save_qrcode/qrchat_paint.svg" 
+                                                     ng-if="qrcode.icon != 'ART'" ng-click="qrcode.icon='ART'" height="60px" />
+                                                <img src="app/assets/img/save_qrcode/qrchat_paint_selected.svg" 
+                                                     ng-if="qrcode.icon == 'ART'"  height="60px"  />
+                                            </span>
+                                            <span  id="saveqrcode_scroll_WORKOUT" class="saveqrcode-qrcode-type-img" ng-click="click_saveqrcode(qrcode)">
+                                                <img src="app/assets/img/save_qrcode/qrchat_bodybuilder.svg" 
+                                                     ng-if="qrcode.icon != 'WORKOUT'" ng-click="qrcode.icon='WORKOUT'" height="60px" />
+                                                <img src="app/assets/img/save_qrcode/qrchat_bodybuilder_selected.svg" 
+                                                     ng-if="qrcode.icon == 'WORKOUT'"  height="60px"  />
+                                            </span>
+                                            <span  id="saveqrcode_scroll_FOOD"  class="saveqrcode-qrcode-type-img" ng-click="click_saveqrcode(qrcode)">
+                                                <img src="app/assets/img/save_qrcode/qrchat_food.svg" 
+                                                     ng-if="qrcode.icon != 'FOOD'" ng-click="qrcode.icon='FOOD'" height="60px" />
+                                                <img src="app/assets/img/save_qrcode/qrchat_food_selected.svg" 
+                                                     ng-if="qrcode.icon == 'FOOD'"  height="60px"  />
+                                            </span>
+                                            <span  id="saveqrcode_scroll_ZOO"  class="saveqrcode-qrcode-type-img" ng-click="click_saveqrcode(qrcode)">
+                                                <img src="app/assets/img/save_qrcode/qrchat_fish.svg" 
+                                                     ng-if="qrcode.icon != 'ZOO'" ng-click="qrcode.icon='ZOO'" height="60px" />
+                                                <img src="app/assets/img/save_qrcode/qrchat_fish_selected.svg" 
+                                                     ng-if="qrcode.icon == 'ZOO'"  height="60px"  />
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td class="saveqrcode-chat-type-arrow saveqrcode-chat-type-arrow-right" ng-click="scrollRight()">
+                                        <img class="saveqrcode-chat-type-arrow saveqrcode-chat-type-arrow-right" src="app/assets/img/others/right_arrow.svg" height="30px"/>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <div ng-if="qrcode.icon=='SPORT'" class="saveqrcode-qrtype-description">SPORT</div>
+                            <div ng-if="qrcode.icon=='FASHION'" class="saveqrcode-qrtype-description">FASHION</div>
+                            <div ng-if="qrcode.icon=='MEDICINE'" class="saveqrcode-qrtype-description">MEDICINE</div>
+                            <div ng-if="qrcode.icon=='TECHNICS'" class="saveqrcode-qrtype-description">TECHNICS</div>
+                            <div ng-if="qrcode.icon=='ART'" class="saveqrcode-qrtype-description">ART</div>
+                            <div ng-if="qrcode.icon=='WORKOUT'" class="saveqrcode-qrtype-description">WORKOUT</div>
+                            <div ng-if="qrcode.icon=='FOOD'" class="saveqrcode-qrtype-description">FOOD</div>
+                            <div ng-if="qrcode.icon=='ZOO'" class="saveqrcode-qrtype-description">ZOO</div>
+                        </div>
+                    </div> -->
+                </fieldset>
+
+                <div class="empty-space"></div>
+
+                <!-- Navigation block style example -->
+                <div class="saveqrcode-setting">
+                    <div class="navigation-group-icn-image">
+                        <img src="app/assets/img/save_qrcode/chat.svg" height="30px" width="30px" />
+                    </div>
+                    <div class="navigation-group-icn-text">
+                        <label class="saveqrcode-label saveqrcode-setting-label">Chat</label><br>
+                        <span class="filed-description filed-description-dark">
+                            Support chat after scan
+                        </span>
+                    </div>
+                    <div class="navigation-group-icn-right">
+                        <ui-switch class="ng-pristine ng-untouched ng-valid ng-isolate-scope switch switch-transition-enabled ng-empty"
+                                   ng-model="qrcode_chatSupport" ng-change="click_saveqrcode(qrcode);" >
+                            <div class="switch-handle"></div>
+                            <div class="switch-handle"></div>
+                        </ui-switch>
+                    </div>
+                </div>
+                <div class="saveqrcode-setting">
+                    <div class="navigation-group-icn-image">
+                        <img
+                             src="app/assets/img/save_qrcode/email_notification.svg"
+                             height="30px" width="30px"
+                             />
+                    </div>
+                    <div class="navigation-group-icn-text">
+                        <label class="saveqrcode-label saveqrcode-setting-label">Email notification</label><br>
+                        <span class="filed-description filed-description-dark">
+                            Be notified via email
+                        </span>
+                    </div>
+                    <div class="navigation-group-icn-right">
+                        <ui-switch class="ng-pristine ng-untouched ng-valid ng-isolate-scope switch switch-transition-enabled ng-empty"
+                                   ng-model="qrcode.emailNotification" ng-change="click_saveqrcode(qrcode);" >
+                            <div class="switch-handle"></div>
+                            <div class="switch-handle"></div>
+                        </ui-switch>
+                    </div>
+                </div>
+                <div class="saveqrcode-setting">
+                    <div class="navigation-group-icn-image">
+                        <img src="app/assets/img/save_qrcode/push notification.svg" height="30px" width="30px" />
+                    </div>
+                    <div class="navigation-group-icn-text">
+                        <label class="saveqrcode-label saveqrcode-setting-label">Push notification</label><br>
+                        <span class="filed-description filed-description-dark">
+                            Be notified through the device
+                        </span>
+                    </div>
+                    <div class="navigation-group-icn-right">
+                        <ui-switch class="ng-pristine ng-untouched ng-valid ng-isolate-scope switch switch-transition-enabled ng-empty"
+                                   ng-model="qrcode.pushNotification" ng-change="click_saveqrcode(qrcode);" >
+                            <div class="switch-handle"></div>
+                            <div class="switch-handle"></div>
+                        </ui-switch>
+                    </div>
+                </div>
+                <div class="saveqrcode-setting saveqrcode-setting-enableqr">
+                    <div class="navigation-group-icn-image">
+                        <img src="app/assets/img/save_qrcode/activation.svg" height="30px" width="30px"/>
+                    </div>
+                    <div class="navigation-group-icn-text">
+                        <label class="saveqrcode-label saveqrcode-setting-label" style="color: white !important;">Activate</label><br>
+                        <span class="filed-description filed-description-dark" style="color: whitesmoke !important">Enable/disable DMN Code</span>
+                    </div>
+                    <div class="navigation-group-icn-right">
+                        <ui-switch class="ng-pristine ng-untouched ng-valid ng-isolate-scope switch switch-transition-enabled ng-empty"
+                                   ng-model="qrcode.active" ng-change="click_saveqrcode(qrcode);" >
+                            <div class="switch-handle"></div>
+                            <div class="switch-handle"></div>
+                        </ui-switch>
+                    </div>
+                </div>
+            </form>
+            <div class="footer-bottom-space"></div>
+        </div>
+    </div>
+</div>

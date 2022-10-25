@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700&display=swap" rel="stylesheet">
+        <style>
+            * {box-sizing: border-box}
+            html {
+                height: 100%;
+                background-color: white;
+                background-image: url("app/assets/img/tutorial/bg_top.svg"), url("app/assets/img/tutorial/bg_bottom.svg");
+                background-position: right top, center bottom;
+                background-repeat: no-repeat, no-repeat;
+                background-size: contain, contain;
+            }
+            body {
+                font-family: Verdana, sans-serif; 
+                margin: 0;
+            }
+            .mySlides {display: none}
+
+            /* Center image */
+            .img-center {
+                display:block; 
+                margin-top: 20px;
+                margin-left: auto; 
+                margin-right: auto; 
+                width: 40%;
+            }
+            /* Button arrows */
+            .img-button {
+                height: 20px; 
+                vertical-align: middle;
+            }
+
+            /* Slideshow container */
+            .slideshow-container {
+                max-width: 1000px;
+                position: relative;
+                margin: auto;
+            }
+
+            /* Next & previous buttons */
+            .prev, .next {
+                cursor: pointer;
+                position: absolute;
+                top: 50%;
+                width: auto;
+                padding: 16px;
+                margin-top: -22px;
+                color: white;
+                font-weight: 700;
+                font-size: 18px;
+                transition: 0.6s ease;
+                border-radius: 0 3px 3px 0;
+                user-select: none;
+            }
+
+            /* Position the "next button" to the right */
+            .next {
+                right: 0;
+                border-radius: 3px 0 0 3px;
+            }
+
+            /* On hover, add a black background color with a little bit see-through */
+            .prev:hover, .next:hover {
+                background-color: rgba(0,0,0,0.8);
+            }
+
+            /* Caption text */
+            .text {
+                color: #f2f2f2;
+                font-size: 15px;
+                padding: 8px 12px;
+                position: absolute;
+                bottom: 8px;
+                width: 100%;
+                text-align: center;
+            }
+
+            /* Title */
+            .title-text {
+                color:#249fda;
+                font-family: 'Roboto', sans-serif;
+                font-size: 20px;
+                font-weight: 700;
+                text-align: center;
+                padding: 5px 0px 15px 0px;
+            }
+
+            /* Description */
+            .description-text {
+                color: #262525;
+                font-family: 'Roboto', sans-serif;
+                font-size: 16px;
+                font-weight: 300;
+                text-align: center;
+                padding: 0px 50px 50px 50px;
+            }
+
+            /* Button text */
+            .button-text {
+                font-size: 16px; 
+                font-family: 'Roboto', sans-serif;
+                font-weight: 400;
+                padding: 30px; 
+                text-decoration: none;
+            }
+
+            /* Number text (1/3 etc) */
+            .numbertext {
+                color: #f2f2f2;
+                font-size: 12px;
+                padding: 8px 12px;
+                position: absolute;
+                top: 0;
+            }
+
+            /* The dots/bullets/indicators */
+            .dot {
+                cursor: pointer;
+                height: 15px;
+                width: 15px;
+                margin: 0 2px;
+                background-color: #cacaca;
+                border-radius: 50%;
+                display: inline-block;
+                transition: background-color 1s ease;
+            }
+
+            .active, .dot:hover {
+                background-color: #249fda;
+            }
+
+            /* Fading animation */
+            .fade {
+                -webkit-animation-name: fade;
+                -webkit-animation-duration: 2s;
+                animation-name: fade;
+                animation-duration: 2s;
+            }
+
+            @-webkit-keyframes fade {
+                from {opacity: .1} 
+                to {opacity: 1}
+            }
+
+            @keyframes fade {
+                from {opacity: .1} 
+                to {opacity: 1}
+            }
+
+            /* On smaller screens, decrease text size */
+            @media only screen and (max-width: 300px) {
+                .prev, .next,.text {font-size: 11px}
+            }
+        </style>
+    </head>
+    <body>
+        
+        
+        <div style="text-align: center; padding-top: 45px; padding-bottom: 15px;">
+            <img src="app/assets/img/tutorial/dpn_logo.svg" style="width: 75%;">
+        </div>
+
+        <div class="slideshow-container" ng-controller="TutorialController">
+            <div class="mySlides fade">
+                <img class="img-center" src="app/assets/img/tutorial/1_create_qr.svg">
+            </div>
+
+            <div class="mySlides fade">
+                <img class="img-center"  src="app/assets/img/tutorial/2_chat.svg">
+            </div>
+
+            <div class="mySlides fade">
+                <img class="img-center"  src="app/assets/img/tutorial/3_settings.svg">
+            </div>
+        </div>
+        <br>
+        <div id="Title1">
+            <div class="title-text">
+                Create your DMN Code
+            </div>
+            <div class="description-text">
+                Using DropMeNote, you can easily create a DMN Code that includes a detailed description of your product or service as well as the option to contact and chat with you.
+            </div>
+        </div>
+        <div id="Title2" >
+            <div class="title-text">
+                Start chatting
+            </div>
+            <div class="description-text">
+                By scanning a DMN Code you are able to start a conversation with its creator.
+            </div>
+        </div>
+        <div id="Title3" >
+            <div class="title-text">
+                Manage your DMN Code
+            </div>
+            <div class="description-text">
+                Send your DMN Code to your email and print it out in sticker form. Others will be able to scan the sticker and start a conversation with you.
+            </div>
+        </div>
+        <div style="text-align: center;
+                    position: absolute;
+                    width: 100px;
+                    bottom: 60px;
+                    left: calc(50% - 50px);">
+            <span class="dot" onclick="currentSlide(1)"></span> 
+            <span class="dot" onclick="currentSlide(2)"></span> 
+            <span class="dot" onclick="currentSlide(3)"></span> 
+        </div>
+        <div style="position: absolute;
+                    bottom: 0px;
+                    left: 0px">
+            <div id="btnPrevious" class="button-text" style="color: #262525; font-weight: 300;" onclick="plusSlides(-1)">
+                <img src="app/assets/img/others/backbutton_black.svg" class="img-button"/><span style="padding-left: 5px; vertical-align:bottom;">BACK</span>
+            </div>
+        </div>
+        <div style="position: absolute;
+                    bottom: 0px;
+                    right: 0px">
+            <div id="btnNext" class="button-text" style="color:#249fda;" onclick="plusSlides(1)">
+                <span style="padding-right: 5px; vertical-align:bottom;">NEXT</span><img src="app/assets/img/others/nextbutton_blue.svg" class="img-button"/>
+            </div>
+            <a id="btnStartDPN" class="button-text" style="color:#249fda;" href=".#/qrcodelist?di=">
+                <span style="padding-right: 5px; vertical-align:bottom;">START</span><img src="app/assets/img/others/nextbutton_blue.svg" class="img-button"/>
+            </a>
+        </div>
+
+        <script>
+            
+            function redirect() {
+                if ((getCookie("dpn_token") != "")) {
+                    window.location.replace("http://localhost:3000/#/qrcodelist?di=undefined");
+                }
+                
+            }
+            
+            function getCookie(name) {
+                return localStorage.getItem(name);
+            }
+            
+            function postToCN1(msg) { //TODELETE
+                if (window.cn1PostMessage) {
+                    // Case 1: Running inside native app in a WebView
+                    window.cn1PostMessage(msg);
+                } else {
+                    // Case 2: Running inside a Javascript app in an iframe
+                    window.parent.postMessage(msg, '*');
+                }
+            }
+            
+            function getUrlParam(paramName) {
+                var vars = {};
+                var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+                    vars[key] = value;
+                });
+                // return vars[paramName];
+                return decodeURIComponent((vars[paramName] + '').replace(/\+/g, '%20'));
+            }
+
+            // to get deviceId from cn1 via url param 'di'
+            var deviceId = getUrlParam('di');
+            postToCN1("tutorial.html " + deviceId); //TODELETE
+            // document.getElementById("btnStartDPN").href = ".?v=1#/qrcodelist?di=" + deviceId; // bez tej bodky to nejde, hodi o predoslu url pred otaznik
+            // document.getElementById("btnStartDPN").href = ".?v=12&di=" + deviceId + "#/qrcodelist"; // bez tej bodky to nejde, hodi o predoslu url pred otaznik
+            document.getElementById("btnStartDPN").href = ".#/qrcodelist?v=13&di=" + deviceId; // bez tej bodky to nejde, hodi o predoslu url pred otaznik
+
+            var slideIndex = 1;
+            showSlides(slideIndex);
+
+            function plusSlides(n) {
+                showSlides(slideIndex += n);
+            }
+
+            function currentSlide(n) {
+                showSlides(slideIndex = n);
+            }
+
+            function showSlides(n) {
+                // Show hide button
+                var previousButton = document.getElementById("btnPrevious");
+                var nextButton = document.getElementById("btnNext");
+                var startButton = document.getElementById("btnStartDPN");
+                var title1 = document.getElementById("Title1");
+                var title2 = document.getElementById("Title2");
+                var title3 = document.getElementById("Title3");
+
+                if(n == 1){
+                    previousButton.style.display = "none";
+                    title1.style.display = "block";
+                    title2.style.display = "none";
+                    title3.style.display = "none";
+                }else{
+                    previousButton.style.display = "block";
+                }
+
+                if(n==2) {
+                    title1.style.display = "none";
+                    title2.style.display = "block";
+                    title3.style.display = "none";
+                }
+                
+                if(n == 3){
+                    nextButton.style.display = "none";
+                    startButton.style.display = "block";
+                    title1.style.display = "none";
+                    title2.style.display = "none";
+                    title3.style.display = "block";      
+                }else{
+                    nextButton.style.display = "block";
+                    startButton.style.display = "none";
+                }
+                
+                var i;
+                var slides = document.getElementsByClassName("mySlides");
+                var dots = document.getElementsByClassName("dot");
+                if (n > slides.length) {slideIndex = 1}    
+                if (n < 1) {slideIndex = slides.length}
+                for (i = 0; i < slides.length; i++) {
+                    slides[i].style.display = "none";  
+                }
+                for (i = 0; i < dots.length; i++) {
+                    dots[i].className = dots[i].className.replace(" active", "");
+                }
+                slides[slideIndex-1].style.display = "block";  
+                dots[slideIndex-1].className += " active";
+            }
+        </script>
+
+    </body>

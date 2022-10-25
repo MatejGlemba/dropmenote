@@ -1,0 +1,118 @@
+<div ng-controller="InboxController">
+    <div ui-content-for="title_navigation">
+        <div class="navbar-left-menu-button" ng-if="(filterParam.value && isFilteredQrAdmin)">
+            <button class="navbar-backbutton" ng-click="click_back()" name="appBackButton">
+                <img style="height: 15px;vertical-align: text-bottom" src="app/assets/img/others/backbutton.svg"/> 
+                <span class="navbar-backbutton-text">{{filterParam.value ? "DMN: " + filterParam.qrcode_name : "Back"}}</span>
+            </button>
+        </div>
+        <div class="navbar-left-menu-button" ng-if="!(filterParam.value && isFilteredQrAdmin)" name="appBackButton" >
+            <!-- <img src="app/assets/img/starbug_navbar_menu_icon1.svg" style="margin-top: 3px;height: 15px;vertical-align: top"> -->
+            <div class="navbar-left-menu-button-space" style="height: 21px !important;">
+                &nbsp
+            </div>
+        </div>
+    </div>    
+
+    <div ui-content-for="title">
+        Inbox
+    </div>
+    <div ui-content-for="title_description">
+        Your chat rooms for the DMN Codes
+    </div>
+    <div ui-content-for="footer-navigation">
+        <div ng-include="'footer.html'"></div>
+    </div>
+
+    <div class="inbox-filter-group">
+        <span class="inbox-filter-content">
+            <img src="app/assets/img/inbox/search.svg" style="height:20px; margin:5px"/>
+            <div style="display: inline-block; width: calc(100% - 80px);" ng-click="click_openInboxFilterDialog()">
+                {{filterParam.qrcode_name == 'undefined' 
+                || filterParam.qrcode_name == '' ? "Filter messages by DMN Item" : "Filtered by: " + filterParam.qrcode_name}}&nbsp
+            </div>
+            <!-- remove filter -->
+            <div class="inbox-filter-cancel" ng-click="click_removeFilter()">
+                <img src="app/assets/img/inbox/cross_red.svg" style="height:15px; margin:8px 10px"/>
+            </div>
+        </span>
+    </div>
+
+
+    <div class="scrollable page-fade-animation">
+        <div class="scrollable-content section background">      
+            <div ui-content-for="loadin-panel-margin-top">
+                <div style="height:59px"></div>
+            </div>
+
+            <!-- filter values -->
+
+            <div class="inbox-spacer">
+            </div>
+
+            <!-- div for no filter found -->
+            <div style="width: 100%;" ng-if="(isServiceFinished == true) && (!filteredMatrixObjects.length)"> 
+                <div class="inbox-empty-text">
+                    <span class="text-title">You have no DMN messages</span>
+                    <br> <br>
+                    <img src="app/assets/img/inbox/inbox_no_msgs.svg" width="50%">
+                </div>
+                <br>
+                <div class="inbox-remove-filter-div-text" ng-if="filterParam.value" ng-init="click_removeFilter()" ng-click="click_removeFilter()">
+                    <img src="app/assets/img/inbox/cross_red.svg" class="inbox-remove-filter-img"/>
+                    <span class="inbox-remove-filter-text">Clear filter</span>
+                </div>
+            </div>
+
+            <div class="list-group">
+                <a ng-repeat="matrixObject in matrixList | filter:filterFunction | orderBy : 'lastMsgDate' : true"
+                   href="#/chat?qr={{matrixObject.qrCodeBean.uuid}}&roomId={{matrixObject.roomId}}"
+                   class="list-group-item list-group-table-padding-item universal-table-link" ng-style="$index == 0 && {'border-top': '1px solid #cacaca'} || $index !=0 && {'border-top': 'none'}">
+
+                    <table class="universal-table" border='0px'>
+                        <tr>
+                            <td class="universal-table-image-wrapper" rowspan="3">
+                                <img ng-if="(matrixObject.qrCodeBean.photo != null && matrixObject.qrCodeBean.photo != '' && matrixObject.qrCodeBean.photo != undefined)" 
+                                    ng-src="{{matrixObject.qrCodeBean.photo}}"
+                                    ng-class="{'universal-table-image chat-icon-shared-img': matrixObject.qrCodeBean.userType == 'SHARED', 
+                                            'universal-table-image chat-icon-admin-img': matrixObject.qrCodeBean.userType == 'ADMIN',
+                                            'universal-table-image inbox-icon-guest-img': matrixObject.qrCodeBean.userType == 'GUEST'}"/>
+                                <img ng-if="(matrixObject.qrCodeBean.photo == null || matrixObject.qrCodeBean.photo == '' || matrixObject.qrCodeBean.photo == undefined)" 
+                                    src="app/assets/img/qr_code_noicon.svg" style="background: #259fda;"
+                                    ng-class="{'universal-table-image chat-icon-shared-img': matrixObject.qrCodeBean.userType == 'SHARED', 
+                                            'universal-table-image chat-icon-admin-img': matrixObject.qrCodeBean.userType == 'ADMIN',
+                                            'universal-table-image inbox-icon-guest-img': matrixObject.qrCodeBean.userType == 'GUEST'}"/>
+                            </td>
+                            <td class="universal-table-name">{{matrixObject.counterpartName ? matrixObject.counterpartName : "Anonymous"}}&nbsp</td>
+                            <td class="universal-table-date">
+                                {{matrixObject.lastMsgDate | date:formatDate(matrixObject.lastMsgDate) }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <img src="app/assets/img/inbox/qrcode.svg" height="15px">
+                                <span style="font-size: 12px; font-weight: 400">{{matrixObject.qrCodeBean.name}}&nbsp</span>
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="universal-table-description">
+                                <span class="text-2lines-preview inbox-last-message">{{matrixObject.lastMsg}}&nbsp</span>
+                            </td>
+                            <td class="universal-table-right">
+                                <div ng-show="matrixObject.blocked == false && matrixObject.newMsgCount > 0" style="float:right; color:white; text-align: center; background-color: #259fda; border-radius: 10px; height:20px; width:20px;">
+                                    {{matrixObject.newMsgCount}}
+                                </div>
+                                <img ng-show="matrixObject.blocked == false && matrixObject.newMsgCount == 0" src="app/assets/img/arrowbutton.svg" height="15px" />
+                                <img ng-show="matrixObject.blocked == true" src="app/assets/img/inbox/blocked.svg" height="20px" />
+                            </td>
+                        </tr>
+                    </table>
+                </a>
+            </div>
+            <div class="footer-bottom-space"></div>            
+            <div class="inbox-spacer"></div>
+            <div class="inbox-spacer"></div>
+        </div>
+    </div>
+</div >

@@ -1,0 +1,326 @@
+<div ng-controller="SettingController">
+    <div ui-content-for="title">
+        Profile
+    </div>
+    <div ui-content-for="title_description">
+        Change your profile settings
+    </div>
+    <div ui-content-for="footer-navigation">
+        <div ng-include="'footer.html'" id="footerDiv"></div>
+    </div>
+    <div ui-content-for="title_navigation_right">
+       <!-- <div ng-click="click_saveuser_submit(user)">
+            <span class="navbar-savebutton-text"><img style="height: 19px; padding-right: 4px;" src="app/assets/img/diskette.svg"/> Save</span>
+        </div>-->
+    </div>
+
+    <div class="saveqrcode-header-button-group" style="top:80px !important;" id="headerSettingDiv">
+        <table style="width: 100%;" >
+            <tbody>
+                <tr>
+                    <td class="setting-header-button">
+                        <div class="saveqrcode-header-button-content" ng-click="click_showChangePassword()">
+                            <img class="saveqrcode-header-button-img" src="app/assets/img/settings/change_password.svg" height="20px"/>
+                            <span class="saveqrcode-header-button-text">Change password</span>
+                        </div>
+                    </td>
+                    <td class="setting-header-button" style="border-right:none;">
+                        <a href="#/blacklist">
+                            <div class="saveqrcode-header-button-content">
+                                <img class="saveqrcode-header-button-img" src="app/assets/img/settings/list.svg" height="20px"/>
+                                <span class="saveqrcode-header-button-text">Manage blacklist</span>
+                            </div>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="scrollable page-fade-animation">
+        <div class="scrollable-content section background">
+            <div ui-content-for="loadin-panel-margin-top">
+                <div style="height:0px"></div>
+            </div>
+            
+            <div class="saveqrcode-top-spacer"></div>
+
+            <form role="form" name="setting_form">
+                <fieldset>
+                    <div class="saveqrcode-group">
+                        <label class="saveqrcode-label-form">Alias</label>
+                        <div class="saveqrcode-group-inner">
+                            <input type="text"
+                                name="setting_alias"
+                                ng-model="user.alias"
+                                class="form-control input-flat"
+                                placeholder="This alias will be used as predefined alias for creating new DMN code."
+                                ng-change="autosave();"
+                                required  autocomplete="off"
+                                maxlength="23"/>
+                            <div ng-messages="setting_form.setting_alias.$error" ng-if="setting_form.setting_alias.$dirty">
+                                <div class="form-msg-error" ng-message="required">
+                                    This field is required
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                    <div class="saveqrcode-group">
+                        <label class="saveqrcode-label-form">Chat icon</label>
+                        <div class="saveqrcode-group-inner" ui-swipe-right="">
+
+                            <div class="universal-table" style="width: 100%;">
+                                <div style="width: 100%; display:flex;" >
+                                    <div class="saveqrcode-chat-type-arrow" ng-click="scrollLeft()">
+                                        <img class="saveqrcode-chat-type-arrow" src="app/assets/img/others/left_arrow.svg" height="30"/>
+                                    </div>
+                                    <div class="saveqrcode-chat-type-scroll" id="setting_scroll_container">
+                                        <div class="saveqrcode-chat-type">
+                                            <span id="setting_P1" class="saveqrcode-qrcode-type-img {{user.chatIcon == 'P1' ? 'setting-chaticon-selected' : ''}}">
+                                                <img src="app/assets/img/profile_icons/P1.svg" ng-click="user.chatIcon='P1';click_saveuser_submit(user);" height="60px" />
+                                            </span>
+                                            <span id="setting_P2" class="saveqrcode-qrcode-type-img {{user.chatIcon == 'P2' ? 'setting-chaticon-selected' : ''}}">
+                                                <img src="app/assets/img/profile_icons/P2.svg" ng-click="user.chatIcon='P2';click_saveuser_submit(user);" height="60px" />
+                                            </span>
+                                            <span id="setting_P3" class="saveqrcode-qrcode-type-img {{user.chatIcon == 'P3' ? 'setting-chaticon-selected' : ''}}">
+                                                <img src="app/assets/img/profile_icons/P3.svg" ng-click="user.chatIcon='P3';click_saveuser_submit(user);" height="60px" />
+                                            </span>
+                                            <span id="setting_P4" class="saveqrcode-qrcode-type-img {{user.chatIcon == 'P4' ? 'setting-chaticon-selected' : ''}}">
+                                                <img src="app/assets/img/profile_icons/P4.svg" ng-click="user.chatIcon='P4';click_saveuser_submit(user);" height="60px" />
+                                            </span>
+                                            <span id="setting_P5" class="saveqrcode-qrcode-type-img {{user.chatIcon == 'P5' ? 'setting-chaticon-selected' : ''}}">
+                                                <img src="app/assets/img/profile_icons/P5.svg" ng-click="user.chatIcon='P5';click_saveuser_submit(user);" height="60px" />
+                                            </span>
+                                            <span id="setting_P6" class="saveqrcode-qrcode-type-img {{user.chatIcon == 'P6' ? 'setting-chaticon-selected' : ''}}">
+                                                <img src="app/assets/img/profile_icons/P6.svg" ng-click="user.chatIcon='P6';click_saveuser_submit(user);" height="60px" />
+                                            </span>
+                                            <span id="setting_P7" class="saveqrcode-qrcode-type-img {{user.chatIcon == 'P7' ? 'setting-chaticon-selected' : ''}}">
+                                                <img src="app/assets/img/profile_icons/P7.svg" ng-click="user.chatIcon='P7';click_saveuser_submit(user);" height="60px" />
+                                            </span>
+                                            <span id="setting_P8" class="saveqrcode-qrcode-type-img {{user.chatIcon == 'P8' ? 'setting-chaticon-selected' : ''}}">
+                                                <img src="app/assets/img/profile_icons/P8.svg" ng-click="user.chatIcon='P8';click_saveuser_submit(user);" height="60px" />
+                                            </span>
+                                            <span id="setting_P9" class="saveqrcode-qrcode-type-img {{user.chatIcon == 'P9' ? 'setting-chaticon-selected' : ''}}">
+                                                <img src="app/assets/img/profile_icons/P9.svg" ng-click="user.chatIcon='P9';click_saveuser_submit(user);" height="60px" />
+                                            </span>
+                                            <span id="setting_P10" class="saveqrcode-qrcode-type-img {{user.chatIcon == 'P10' ? 'setting-chaticon-selected' : ''}}">
+                                                <img src="app/assets/img/profile_icons/P10.svg" ng-click="user.chatIcon='P10';click_saveuser_submit(user);" height="60px"/>
+                                            </span>
+
+                                            <span id="setting_P11" class="saveqrcode-qrcode-type-img {{user.chatIcon == 'P11' ? 'setting-chaticon-selected' : ''}}">
+                                                <img src="app/assets/img/profile_icons/P11.svg" ng-click="user.chatIcon='P11';click_saveuser_submit(user);" height="60px"/>
+                                            </span>
+                                            <span id="setting_P12" class="saveqrcode-qrcode-type-img {{user.chatIcon == 'P12' ? 'setting-chaticon-selected' : ''}}">
+                                                <img src="app/assets/img/profile_icons/P12.svg" ng-click="user.chatIcon='P12';click_saveuser_submit(user);" height="60px"/>
+                                            </span>
+                                            <span id="setting_P14" class="saveqrcode-qrcode-type-img {{user.chatIcon == 'P14' ? 'setting-chaticon-selected' : ''}}">
+                                                <img src="app/assets/img/profile_icons/P14.svg" ng-click="user.chatIcon='P14';click_saveuser_submit(user);" height="60px"/>
+                                            </span>
+<!-- 
+<span class="saveqrcode-qrcode-type-img {{user.chatIcon == 'P13' ? 'setting-chaticon-selected' : ''}}">
+<img src="app/assets/img/profile_icons/P13.svg" ng-click="user.chatIcon='P13'" height="60px"/>
+</span>
+
+<span class="saveqrcode-qrcode-type-img {{user.chatIcon == 'P15' ? 'setting-chaticon-selected' : ''}}">
+<img src="app/assets/img/profile_icons/P15.svg" ng-click="user.chatIcon='P15'" height="60px"/>
+</span>
+<span class="saveqrcode-qrcode-type-img {{user.chatIcon == 'P16' ? 'setting-chaticon-selected' : ''}}">
+<img src="app/assets/img/profile_icons/P16.svg" ng-click="user.chatIcon='P16'" height="60px"/>
+</span>
+<span class="saveqrcode-qrcode-type-img {{user.chatIcon == 'P17' ? 'setting-chaticon-selected' : ''}}">
+<img src="app/assets/img/profile_icons/P17.svg" ng-click="user.chatIcon='P17'" height="60px"/>
+</span> -->
+                                            <span id="setting_P18" class="saveqrcode-qrcode-type-img {{user.chatIcon == 'P18' ? 'setting-chaticon-selected' : ''}}">
+                                                <img src="app/assets/img/profile_icons/P18.svg" ng-click="user.chatIcon='P18';click_saveuser_submit(user);" height="60px"/>
+                                            </span>
+                                            <span id="setting_P19" class="saveqrcode-qrcode-type-img {{user.chatIcon == 'P19' ? 'setting-chaticon-selected' : ''}}">
+                                                <img src="app/assets/img/profile_icons/P19.svg" ng-click="user.chatIcon='P19';click_saveuser_submit(user);" height="60px"/>
+                                            </span>
+                                            <span id="setting_P20" class="saveqrcode-qrcode-type-img {{user.chatIcon == 'P20' ? 'setting-chaticon-selected' : ''}}">
+                                                <img src="app/assets/img/profile_icons/P20.svg" ng-click="user.chatIcon='P20';click_saveuser_submit(user);" height="60px"/>
+                                            </span> 
+                                            <span id="setting_P21"  class="saveqrcode-qrcode-type-img {{user.chatIcon == 'P21' ? 'setting-chaticon-selected' : ''}}">
+                                                <img src="app/assets/img/profile_icons/P21.svg" ng-click="user.chatIcon='P21';click_saveuser_submit(user);" height="60px"/>
+                                            </span>
+                                            <span id="setting_P22" class="saveqrcode-qrcode-type-img {{user.chatIcon == 'P22' ? 'setting-chaticon-selected' : ''}}">
+                                                <img src="app/assets/img/profile_icons/P22.svg" ng-click="user.chatIcon='P22';click_saveuser_submit(user);" height="60px"/>
+                                            </span>
+                                            <span id="setting_P23" class="saveqrcode-qrcode-type-img {{user.chatIcon == 'P23' ? 'setting-chaticon-selected' : ''}}">
+                                                <img src="app/assets/img/profile_icons/P23.svg" ng-click="user.chatIcon='P23';click_saveuser_submit(user);" height="60px"/>
+                                            </span><!-- 
+<span class="saveqrcode-qrcode-type-img {{user.chatIcon == 'P24' ? 'setting-chaticon-selected' : ''}}">
+<img src="app/assets/img/profile_icons/P24.svg" ng-click="user.chatIcon='P24'" height="60px"/>
+</span>
+<span class="saveqrcode-qrcode-type-img {{user.chatIcon == 'P25' ? 'setting-chaticon-selected' : ''}}">
+<img src="app/assets/img/profile_icons/P25.svg" ng-click="user.chatIcon='P25'" height="60px"/>
+</span> 
+-->
+                                            <span id="setting_P26" class="saveqrcode-qrcode-type-img {{user.chatIcon == 'P26' ? 'setting-chaticon-selected' : ''}}">
+                                                <img src="app/assets/img/profile_icons/P26.svg" ng-click="user.chatIcon='P26';click_saveuser_submit(user);" height="60px"/>
+                                            </span>
+                                            <span id="setting_P27"  class="saveqrcode-qrcode-type-img {{user.chatIcon == 'P27' ? 'setting-chaticon-selected' : ''}}">
+                                                <img src="app/assets/img/profile_icons/P27.svg" ng-click="user.chatIcon='P27';click_saveuser_submit(user);" height="60px"/>
+                                            </span>
+                                            <span id="setting_P28"  class="saveqrcode-qrcode-type-img {{user.chatIcon == 'P28' ? 'setting-chaticon-selected' : ''}}">
+                                                <img src="app/assets/img/profile_icons/P28.svg" ng-click="user.chatIcon='P28';click_saveuser_submit(user);" height="60px"/>
+                                            </span>
+                                            <span id="setting_P29"  class="saveqrcode-qrcode-type-img {{user.chatIcon == 'P29' ? 'setting-chaticon-selected' : ''}}">
+                                                <img src="app/assets/img/profile_icons/P29.svg" ng-click="user.chatIcon='P29';click_saveuser_submit(user);" height="60px"/>
+                                            </span>
+                                            <span id="setting_P30"  class="saveqrcode-qrcode-type-img {{user.chatIcon == 'P30' ? 'setting-chaticon-selected' : ''}}">
+                                                <img src="app/assets/img/profile_icons/P30.svg" ng-click="user.chatIcon='P30';click_saveuser_submit(user);" height="60px"/>
+                                            </span>
+
+
+                                            <!-- <span class="saveqrcode-qrcode-type-img {{user.chatIcon == 'P31' ? 'setting-chaticon-selected' : ''}}">
+<img src="app/assets/img/profile_icons/P31.svg" ng-click="user.chatIcon='P31'" height="60px"/>
+</span>
+<span class="saveqrcode-qrcode-type-img {{user.chatIcon == 'P32' ? 'setting-chaticon-selected' : ''}}">
+<img src="app/assets/img/profile_icons/P32.svg" ng-click="user.chatIcon='P32'" height="60px"/>
+</span>
+<span class="saveqrcode-qrcode-type-img {{user.chatIcon == 'P33' ? 'setting-chaticon-selected' : ''}}">
+<img src="app/assets/img/profile_icons/P33.svg" ng-click="user.chatIcon='P33'" height="60px"/>
+</span>
+<span class="saveqrcode-qrcode-type-img {{user.chatIcon == 'P34' ? 'setting-chaticon-selected' : ''}}">
+<img src="app/assets/img/profile_icons/P34.svg" ng-click="user.chatIcon='P34'" height="60px"/>
+</span>
+<span class="saveqrcode-qrcode-type-img {{user.chatIcon == 'P35' ? 'setting-chaticon-selected' : ''}}">
+<img src="app/assets/img/profile_icons/P35.svg" ng-click="user.chatIcon='P35'" height="60px"/>
+</span>
+<span class="saveqrcode-qrcode-type-img {{user.chatIcon == 'P36' ? 'setting-chaticon-selected' : ''}}">
+<img src="app/assets/img/profile_icons/P36.svg" ng-click="user.chatIcon='P36'" height="60px"/>
+</span>
+<span class="saveqrcode-qrcode-type-img {{user.chatIcon == 'P37' ? 'setting-chaticon-selected' : ''}}">
+<img src="app/assets/img/profile_icons/P37.svg" ng-click="user.chatIcon='P37'" height="60px"/>
+</span>
+<span class="saveqrcode-qrcode-type-img {{user.chatIcon == 'P38' ? 'setting-chaticon-selected' : ''}}">
+<img src="app/assets/img/profile_icons/P38.svg" ng-click="user.chatIcon='P38'" height="60px"/>
+</span>
+<span class="saveqrcode-qrcode-type-img {{user.chatIcon == 'P39' ? 'setting-chaticon-selected' : ''}}">
+<img src="app/assets/img/profile_icons/P39.svg" ng-click="user.chatIcon='P39'" height="60px"/>
+</span>
+<span class="saveqrcode-qrcode-type-img {{user.chatIcon == 'P40' ? 'setting-chaticon-selected' : ''}}">
+<img src="app/assets/img/profile_icons/P40.svg" ng-click="user.chatIcon='P40'" height="60px"/>
+</span> -->
+
+                                        </div>
+                                    </div>
+                                    <div class="saveqrcode-chat-type-arrow" ng-click="scrollRight();">
+                                        <img class="saveqrcode-chat-type-arrow" src="app/assets/img/others/right_arrow.svg" height="30px"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div ng-if="user.chatIcon=='P1'" class="saveqrcode-qrtype-description">Mime</div>
+                            <div ng-if="user.chatIcon=='P2'" class="saveqrcode-qrtype-description">Caveman</div>
+                            <div ng-if="user.chatIcon=='P3'" class="saveqrcode-qrtype-description">Burglar</div>
+                            <div ng-if="user.chatIcon=='P4'" class="saveqrcode-qrtype-description">Doctor</div>
+                            <div ng-if="user.chatIcon=='P5'" class="saveqrcode-qrtype-description">Gothic</div>
+                            <div ng-if="user.chatIcon=='P6'" class="saveqrcode-qrtype-description">Frankenstein</div>
+                            <div ng-if="user.chatIcon=='P7'" class="saveqrcode-qrtype-description">Robot</div>
+                            <div ng-if="user.chatIcon=='P8'" class="saveqrcode-qrtype-description">Scuba diver</div>
+                            <div ng-if="user.chatIcon=='P9'" class="saveqrcode-qrtype-description">Superhero</div>
+                            <div ng-if="user.chatIcon=='P10'" class="saveqrcode-qrtype-description">Viking</div>
+
+                            <div ng-if="user.chatIcon=='P11'" class="saveqrcode-qrtype-description">Actress</div>
+                            <div ng-if="user.chatIcon=='P12'" class="saveqrcode-qrtype-description">Football player</div>
+                            <div ng-if="user.chatIcon=='P13'" class="saveqrcode-qrtype-description">Bear</div>
+                            <div ng-if="user.chatIcon=='P14'" class="saveqrcode-qrtype-description">Builder</div>
+                            <div ng-if="user.chatIcon=='P15'" class="saveqrcode-qrtype-description">Rabbit</div>
+                            <div ng-if="user.chatIcon=='P16'" class="saveqrcode-qrtype-description">Vampire</div>
+                            <div ng-if="user.chatIcon=='P17'" class="saveqrcode-qrtype-description">Monster</div>
+                            <div ng-if="user.chatIcon=='P18'" class="saveqrcode-qrtype-description">Operator</div>
+                            <div ng-if="user.chatIcon=='P19'" class="saveqrcode-qrtype-description">Surgeon</div>
+                            <div ng-if="user.chatIcon=='P20'" class="saveqrcode-qrtype-description">Student</div>
+
+                            <div ng-if="user.chatIcon=='P21'" class="saveqrcode-qrtype-description">Skater</div>
+                            <div ng-if="user.chatIcon=='P22'" class="saveqrcode-qrtype-description">Witch</div>
+                            <div ng-if="user.chatIcon=='P23'" class="saveqrcode-qrtype-description">Farmer</div>
+                            <div ng-if="user.chatIcon=='P24'" class="saveqrcode-qrtype-description">Santa claus</div>
+                            <div ng-if="user.chatIcon=='P25'" class="saveqrcode-qrtype-description">Fireman</div>
+                            <div ng-if="user.chatIcon=='P26'" class="saveqrcode-qrtype-description">Grandfather</div>
+                            <div ng-if="user.chatIcon=='P27'" class="saveqrcode-qrtype-description">Grandmother</div>
+                            <div ng-if="user.chatIcon=='P28'" class="saveqrcode-qrtype-description">Chef</div>
+                            <div ng-if="user.chatIcon=='P29'" class="saveqrcode-qrtype-description">Policewoman</div>
+                            <div ng-if="user.chatIcon=='P30'" class="saveqrcode-qrtype-description">Magician</div>
+
+                            <div ng-if="user.chatIcon=='P31'" class="saveqrcode-qrtype-description">Viking</div>
+                            <div ng-if="user.chatIcon=='P32'" class="saveqrcode-qrtype-description">Viking</div>
+                            <div ng-if="user.chatIcon=='P33'" class="saveqrcode-qrtype-description">Viking</div>
+                            <div ng-if="user.chatIcon=='P34'" class="saveqrcode-qrtype-description">Viking</div>
+                            <div ng-if="user.chatIcon=='P35'" class="saveqrcode-qrtype-description">Viking</div>
+                            <div ng-if="user.chatIcon=='P36'" class="saveqrcode-qrtype-description">Viking</div>
+                            <div ng-if="user.chatIcon=='P37'" class="saveqrcode-qrtype-description">Viking</div>
+                            <div ng-if="user.chatIcon=='P38'" class="saveqrcode-qrtype-description">Viking</div>
+                            <div ng-if="user.chatIcon=='P39'" class="saveqrcode-qrtype-description">Viking</div>
+                            <div ng-if="user.chatIcon=='P40'" class="saveqrcode-qrtype-description">Viking</div>
+
+                        </div>
+                    </div>
+                    <div class="empty-space" ></div>
+                </fieldset>
+
+                <div class="empty-space" ></div>
+
+                <div class="saveqrcode-setting">
+                    <div class="navigation-group-icn-image">
+                        <img src="app/assets/img/save_qrcode/email_notification.svg" height="30px" width="30px">
+                    </div>
+                    <div class="navigation-group-icn-text">
+                        <label class="saveqrcode-label saveqrcode-setting-label">Email notification</label>
+                        <br>
+                        <span class="filed-description filed-description-dark">
+                            Be notified via email
+                        </span>
+                    </div>
+                    <div class="navigation-group-icn-right">
+                        <ui-switch class="ng-pristine ng-untouched ng-valid ng-isolate-scope switch switch-transition-enabled ng-empty"
+                                   ng-model="user.emailNotification" ng-change="click_saveuser_submit(user);">
+                            <div class="switch-handle"></div>
+                            <div class="switch-handle"></div>
+                        </ui-switch>
+                    </div>
+                </div>
+
+                <div class="saveqrcode-setting">
+                    <div class="navigation-group-icn-image">
+                        <img src="app/assets/img/save_qrcode/push notification.svg" height="30px" width="30px">
+                    </div>
+                    <div class="navigation-group-icn-text">
+                        <label class="saveqrcode-label saveqrcode-setting-label">Push notification</label>
+                        <br>
+                        <span class="filed-description filed-description-dark">
+                            Be notified through the device
+                        </span>
+                    </div>
+                    <div class="navigation-group-icn-right">
+                        <ui-switch class="ng-pristine ng-untouched ng-valid ng-isolate-scope switch switch-transition-enabled ng-empty"
+                                   ng-model="user.pushNotification" ng-change="click_saveuser_submit(user);">
+                            <div class="switch-handle"></div>
+                            <div class="switch-handle"></div>
+                        </ui-switch>
+                    </div>
+                </div>
+
+                <div class="saveqrcode-setting saveqrcode-setting-enableqr" ng-click="click_logout()">
+                    <div class="navigation-group-icn-image">
+                        <img src="app/assets/img/settings/logout.svg" height="30px" width="30px"/>
+                    </div>
+                    <div class="navigation-group-icn-text">
+                        <label class="saveqrcode-label saveqrcode-setting-label" style="color: white !important;">Logout</label><br>
+                        <span class="filed-description filed-description-dark" style="color: whitesmoke !important">Logout from this device</span>
+                    </div>
+                </div>
+
+                <!-- <div class="saveqrcode-group-btn">
+                    <div class="btn btn-primary btn-block" ng-click="click_saveuser_submit(user)">
+                        {{user.id > 0 ? 'UPDATE ACCOUNT' : 'SAVE ACCOUNT'}}
+                    </div>
+                </div> -->
+            </form>
+            <div class="footer-bottom-space"></div>
+        </div>
+    </div>
+</div>

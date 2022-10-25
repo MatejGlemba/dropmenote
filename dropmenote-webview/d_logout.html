@@ -1,0 +1,26 @@
+<div class="scrollable">
+    <div class="scrollable-content section bck-white">
+        <div class="md-primary pull-left navbar-left-menu-button">
+            <div ng-click="closeDialog()" name="appBackButton">
+                <img src="app/assets/img/arrowbutton_blue.svg" style="transform: rotate(180deg); height:20px; margin-right: 5px;"/> 
+                <span style="color:#249fda;">Profile</span>
+            </div>
+        </div> 
+        <img class="header-image"
+             src="app/assets/img/logo_blue.svg"
+             height="30%" style="margin-top:70px"
+             />
+        <div class="dialog-center-text">
+            <div style="font-size: 20px; font-weight: 500;">Logout</div>
+            <div>
+                Do you want to logout?
+            </div>
+        </div>
+        <div >
+            <div style="margin: 25px 24px 10px 24px; text-align: center;">
+                <div class="btn btn-primary btn-block logout-button" ng-click="logout()">Yes</div>
+                <div class="btn btn-primary btn-block logout-button" ng-click="closeDialog()">No</div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,66 @@
+<div ng-controller="BlacklistController">
+    <div ui-content-for="title">
+        Blacklist
+    </div>
+    <div ui-content-for="title_description">
+        List of blocked contacts
+    </div>
+    <div ui-content-for="title_navigation">
+        <div class="navbar-left-menu-button">
+            <button class="navbar-backbutton" ng-click="click_back()"  name="appBackButton" >
+                <img style="height: 15px;vertical-align: text-bottom" src="app/assets/img/others/backbutton.svg"/> 
+                <span class="navbar-backbutton-text">Profile</span>
+            </button>
+
+        </div>
+    </div>  
+
+    <div ui-content-for="title_navigation_right">
+       <!-- <div class="pull-right small-headline" ng-click="click_showdialog_addNewBlacklist()">
+            <img class="navbar-right-icon" src="app/assets/img/starbug_navbar_add.svg"/>
+        </div>-->
+    </div>
+
+    <div ui-content-for="footer-navigation">
+        <div ng-include="'footer.html'"></div>
+    </div>
+
+    <div class="scrollable page-fade-animation" >
+        <div class="scrollable-content section background">
+            <div class="qrcodelist-spacer">
+            </div>
+            <div ng-if="blacklist.length < 1" class="text-center">
+                <div class="text-block">
+                    <label class="saveqrcode-label saveqrcode-setting-label text-center">Your Blacklist is empty</label>
+                    <br>
+                    Block user directly from the chat.
+                </div>
+            </div>
+
+            <div class="list-group">
+                <a
+                   ng-repeat="blaclistIter in blacklist"
+                   ng-click="click_showdialog_modifyBlasklist(blaclistIter)"
+                   class="list-group-item list-group-table-padding-item universal-table-link" ng-style="$index == 0 && {'border-top': '1px solid #cacaca'} || $index !=0 && {'border-top': 'none'}">
+                    <table class="universal-table" style="height:50px">
+                        <tr>
+                            <td class="universal-table-name">
+                                {{blaclistIter.alias}}
+                            </td>
+                            <td class="universal-table-right" rowspan="2">
+                                <img src="app/assets/img/arrowbutton.svg" height="15px" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="universal-table-description">
+                                {{blaclistIter.note}}
+                            </td>
+                        </tr>
+                    </table>
+                </a>
+            </div>
+
+            <div class="footer-bottom-space"></div>
+        </div>
+    </div>
+</div>

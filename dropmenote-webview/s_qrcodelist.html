@@ -1,0 +1,68 @@
+<div ng-controller="QrcodelistController">
+    <div ui-content-for="title">
+        Items
+    </div>
+    <div ui-content-for="title_description">
+        List of all yours DMN Codes
+    </div>
+    <div ui-content-for="title_navigation_right">
+        <div ng-click="click_new_qrcode()"><img class="navbar-right-icon" src="app/assets/img/starbug_navbar_add.svg"/></div>
+    </div>
+
+    <div ui-content-for="footer-navigation">
+        <div ng-include="'footer.html'"></div>
+    </div>
+
+    <div class="scrollable page">
+        <div class="scrollable-content section background">
+            <div class="qrcodelist-spacer">
+            </div>
+            <div ng-if="(qrcodelist != null && qrcodelist.length == 0)" class="text-center">
+                <div class="text-title">You have no DMN Codes created</div>
+                <br/>
+                <img src="app/assets/img/tutorial/1_create_qr.svg" width="50%">
+            </div>
+
+            <div class="list-group">
+                <a
+                   ng-repeat="qrcode in qrcodelist | orderBy : 'name' : false"
+                   ng-click="showToastShared(qrcode);"
+                   href="{{calculateHref(qrcode);}}"
+                   class="list-group-item list-group-table-padding-item universal-table-link" ng-style="$index == 0 && {'border-top': '1px solid #cacaca'} || $index !=0 && {'border-top': 'none'}">
+                    <table class="universal-table">
+                        <tr>
+                            <td class="universal-table-image-wrapper" rowspan="3">
+                                <img ng-if="(qrcode.photo != null && qrcode.photo != '' && qrcode.photo != undefined)" ng-src="{{qrcode.photo}}" style="background: #259fda;"
+                                    ng-class="{'universal-table-image chat-icon-shared-img': qrcode.userType == 'SHARED', 
+                                            'universal-table-image chat-icon-admin-img': !(qrcode.userType == 'SHARED')}"/>
+                                <img ng-if="(qrcode.photo == null || qrcode.photo == '' || qrcode.photo == undefined)" src="app/assets/img/qr_code_noicon.svg" style="background: #259fda;"
+                                    ng-class="{'universal-table-image chat-icon-shared-img': qrcode.userType == 'SHARED', 
+                                            'universal-table-image chat-icon-admin-img': !(qrcode.userType == 'SHARED')}"/>
+                            </td>
+                            <td class="universal-table-name" colspan="2">{{qrcode.name}}</td>
+                            <td class="universal-table-date">
+                                {{ qrcode.created | date:'dd.MM.yyyy'}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" class="universal-table-description">
+                                <span class="text-2lines-preview">{{qrcode.description}}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <img src="app/assets/img/qrcodelist/rooms.svg" height="15px" />
+                                <span class="universal-table-imgtext">{{qrcode.roomsCount}}</span>
+                            </td>
+                            <td></td>
+                            <td class="universal-table-right">
+                                <img src="app/assets/img/arrowbutton.svg" height="15px" />
+                            </td>
+                        </tr>
+                    </table>
+                </a>
+            </div>
+            <div class="footer-bottom-space"></div>
+        </div>
+    </div>
+</div >

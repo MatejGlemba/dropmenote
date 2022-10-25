@@ -1,0 +1,47 @@
+<div ng-controller="QrcodeshareController">
+    <div ui-content-for="title">
+        DMN code share list
+    </div>
+    <div ui-content-for="title_description">
+        Edit the user list sharing the DMN Code
+    </div>
+    <div ui-content-for="title_navigation">
+        <div class="navbar-left-menu-button">
+            <button class="navbar-backbutton" ng-click="click_back()"  name="appBackButton">
+                <img style="height: 15px;vertical-align: text-bottom" src="app/assets/img/others/backbutton.svg"/> 
+                <span class="navbar-backbutton-text">DMN Code settings</span>
+            </button>
+        </div>
+    </div>    
+    <div ui-content-for="title_navigation_right">
+        <div class="pull-right small-headline" ng-click="click_showdialog_addQrcodeShare()">
+            <img class="navbar-right-icon" src="app/assets/img/starbug_navbar_add.svg"/>
+        </div>
+    </div>
+    <div ui-content-for="footer-navigation">
+        <div ng-include="'footer.html'"></div>
+    </div>
+    <div class="scrollable page-fade-animation">
+        <div class="scrollable-content section background">
+            <div ng-if="blacklist.length < 1" class="text-center">You don't have any people to share your DMN Code with.</div>
+            <div class="qrcodelist-spacer"></div>
+            <div class="list-group">
+                <a class="list-group-item list-group-table-padding-item universal-table-link" ng-repeat="qritem in qrcodeshares"
+                    ng-click="click_showdialog_modifyQrcodeShare(qritem)" 
+                    ng-style="$index == 0 && {'border-top': '1px solid #cacaca'} || $index !=0 && {'border-top': 'none'}">
+                    <table class="universal-table">
+                        <tr>
+                            <td class="universal-table-description">
+                                <span style="vertical-align: sub;">{{qritem}}</span>
+                            </td>
+                            <td class="universal-table-right">
+                                <img src="app/assets/img/arrowbutton.svg" height="15px" />
+                            </td>
+                        </tr>
+                    </table>
+                </a>
+            </div>
+            <div class="footer-bottom-space"></div>
+        </div>
+    </div>
+</div>

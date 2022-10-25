@@ -1,0 +1,40 @@
+<div class="dialog-header" >
+    <div>
+        <span ng-click="closeDialog()" name="appBackButton" class="pull-right"><img src="app/assets/img/others/cross.svg" height="20px"/> </span>
+    </div>
+    <h4 class="headline" style="margin-bottom: 5px; margin-top:30px">             
+        DMN Share
+    </h4>
+    <div class="small-text" style="margin-top: 0px">
+        <h6>Enter the email of the person you want to share the DMN Code with</h6>
+    </div>
+</div>
+<div class="scrollable" style="padding-top: 105px;"> 
+    <div class="scrollable-content section background" style="overflow-y:scroll;">
+        <form role="form" name="qrcodeshare_form">
+            <fieldset>
+                <div class="saveqrcode-group">
+                    <label class="saveqrcode-label-form">Email</label>
+                    <div class="saveqrcode-group-inner">
+                        <input class="form-control input-flat" type="email" validate-email
+                            name="shareUserLogin" ng-model="shareUserLogin" placeholder="Enter email" required autocomplete="off"/>
+                        <div ng-messages="qrcodeshare_form.shareUserLogin.$error" 
+                            ng-if="qrcodeshare_form.shareUserLogin.$dirty">
+                            <div class="form-msg-error" ng-message="required">
+                                This field is required
+                            </div>
+                            <div class="form-msg-error" ng-message="email">
+                                Invalid email
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <div class="saveqrcode-group-btn">
+                <div class="btn btn-primary btn-block" ng-click="click_qrcodeshare_add()">
+                    SHARE DMN CODE
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

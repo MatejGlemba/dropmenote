@@ -1,0 +1,48 @@
+<div class="dialog-header" >
+    <div>
+        <span ng-click="closeDialog()" name="appBackButton" class="pull-right"><img src="app/assets/img/others/cross.svg" height="20px"/> </span>
+    </div>
+    <h4 class="headline" style="margin-bottom: 5px; margin-top:30px">             
+        Blacklist
+    </h4>
+    <div class="small-text" style="margin-top: 0px">
+        <h6>Describe the problem with user</h6>
+    </div>
+</div>
+<div class="scrollable" style="padding-top: 105px;"> 
+    <div class="scrollable-content section background" style="overflow-y:scroll;">
+        <form role="form" name="addnewblacklist_form">
+            <fieldset>
+                <div class="saveqrcode-group">
+                    <label class="saveqrcode-label-form">Alias</label>
+                    <div class="saveqrcode-group-inner">
+                        <input class="form-control input-flat" name="editblacklist_alias" 
+                            ng-model="blacklistObject.alias" placeholder="Enter alias of user" required readonly autocomplete="off"/>
+                    </div> 
+                </div>
+                <div class="saveqrcode-group">
+                    <label class="saveqrcode-label-form">Note</label>
+                    <div class="saveqrcode-group-inner">
+                        <textarea class="form-control input-flat" style="height: 200px !important" maxlength="240"
+                            name="editblacklist_note" rows="4" cols="50" ng-model="blacklistObject.note" 
+                            placeholder="Description of problem" required  autocomplete="off">
+                        </textarea>
+                    </div>
+                </div>
+            </fieldset>
+            
+            <div class="saveqrcode-group-btn" style="margin-bottom: 15px !important;">
+                <div class="btn btn-primary btn-block" ng-click="click_blacklist_save()">
+                    Save
+                </div>
+            </div>
+            <div ng-if="showDelete" class="saveqrcode-group-btn" style="margin-bottom: 15px !important;">
+                <div class="btn-red btn-primary btn-block"
+                    ng-click="click_blacklist_delete()" 
+                    ng-hide="{{blacklistObject.uuid == '' || blacklistObject.alias == ''}}">
+                    Delete
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
