@@ -1,5 +1,5 @@
 # dropmenote
-dropmenote server + db
+dropmenote server + db + webview
 
 # build server
 
