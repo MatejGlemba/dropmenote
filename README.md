@@ -1,0 +1,2 @@
+# dropmenote
+dropmenote server + db
