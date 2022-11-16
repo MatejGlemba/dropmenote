@@ -39,13 +39,13 @@ public class WebSocketConf implements WebSocketConfigurer {
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
     	
     	/**
-    	 * Chat Websocket url je: ws://localhost:8080/starbug-dropmenote-ws/websocket/chat
+    	 * Chat Websocket url je: ws://localhost:8080/dropmenote-ws/websocket/chat
     	 */
         WebSocketHandlerRegistration chatHandler = registry.addHandler(webSocketChatHandler, "/websocket/chat");
         chatHandler.setHandshakeHandler(new DefaultHandshakeHandler(new TomcatRequestUpgradeStrategy()));
         
         /**
-         * Notification Websocket url je: ws://localhost:8080/starbug-dropmenote-ws/websocket/notification
+         * Notification Websocket url je: ws://localhost:8080/dropmenote-ws/websocket/notification
          */
         WebSocketHandlerRegistration notificationHandler = registry.addHandler(webSocketNotificationHandler, "/websocket/notification");
         notificationHandler.setHandshakeHandler(new DefaultHandshakeHandler(new TomcatRequestUpgradeStrategy()));

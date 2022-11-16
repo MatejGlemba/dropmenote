@@ -57,6 +57,7 @@ public class MatrixController extends AbstractController {
 	@RequestMapping(value = "/sendMessage", method = RequestMethod.POST, produces = ControllerConstant.ALL, consumes = ControllerConstant.ALL)
 	@ResponseBody
 	public String sendMsg(String qrcode, @RequestParam(value="message") String message, @RequestParam("createRoom") boolean createRoom) throws Exception {
+		LOG.info("MatrixController - sendMsg - qrcode {}, message - {}, createRoom - {}", qrcode, message, createRoom);
 		return matrixHandler.sendMsg(qrcode, message, createRoom);
 	}
 
@@ -64,6 +65,7 @@ public class MatrixController extends AbstractController {
 	@RequestMapping(value = "/invite", method = RequestMethod.POST, produces = ControllerConstant.ALL, consumes = ControllerConstant.ALL)
 	@ResponseBody
 	public String invite(String qrcode, String userName) throws Exception {
+		LOG.info("MatrixController - invite - qrcode {}, userName - {}", qrcode, userName);
 		return matrixHandler.invite(qrcode, userName);
 	}
 	
@@ -71,6 +73,7 @@ public class MatrixController extends AbstractController {
 	@RequestMapping(value = "/saveMatrixRoom", method = RequestMethod.POST, consumes = ControllerConstant.ALL)
 	@ResponseBody
 	public void saveMatrixRoom(@RequestHeader(value = ControllerConstant.TOKEN_HEADER, required = true) String token, String userUuid, String qrUuid, String matrixRoomId, HttpServletResponse httpResponse) throws NotValidSessionException, PermissionDeniedException {
+		LOG.info("MatrixController - saveMatrixRoom - token {}, userUuid - {}, qrUuid - {}, matrixRoomId - {}", token, userUuid, qrUuid, matrixRoomId);
 		matrixHandler.save(token, userUuid, qrUuid, matrixRoomId, httpResponse);
 	}
 	
@@ -78,6 +81,7 @@ public class MatrixController extends AbstractController {
 	@RequestMapping(value = "/getMatrixRoom", method = RequestMethod.POST, produces = ControllerConstant.ALL, consumes = ControllerConstant.ALL)
 	@ResponseBody
 	public String getMatrixRoom(@RequestHeader(value = ControllerConstant.TOKEN_HEADER, required = true) String token, String userUuid, String qrUuid, HttpServletResponse httpResponse) throws NotValidSessionException, PermissionDeniedException {
+		LOG.info("MatrixController - getMatrixRoom - token {}, userUuid - {}, qrUuid - {}", token, userUuid, qrUuid);
 		return matrixHandler.getMatrixRoom(token, userUuid, qrUuid, httpResponse);
 	}
 
@@ -85,15 +89,14 @@ public class MatrixController extends AbstractController {
 	@RequestMapping(value = "/registerMatrixUser", method = RequestMethod.POST, produces = ControllerConstant.ALL, consumes = ControllerConstant.ALL)
 	@ResponseBody
 	public String registerMatrixUser(@RequestHeader(value = ControllerConstant.TOKEN_HEADER, required = true) String token, String userUuid, HttpServletResponse httpResponse) throws NotValidSessionException, PermissionDeniedException {
-//		return matrixHandler.registerMatrixUser(token, userUuid, httpResponse);
+		LOG.info("MatrixController - registerMatrixUser - token {}, userUuid - {}", token, userUuid);
+		//		return matrixHandler.registerMatrixUser(token, userUuid, httpResponse);
 		return ""; //TODO
 	}
 	
 	/**
 	 * ziska zoznam qr kodov kde je owner/shared user a vytiahne room qrcodeuuid=matrixqruuid
 	 * @param token
-	 * @param userUuid
-	 * @param qrUuid
 	 * @param httpResponse
 	 * @return
 	 * @throws Exception 
@@ -102,6 +105,7 @@ public class MatrixController extends AbstractController {
 	@RequestMapping(value = "/loadAdminRooms", method = RequestMethod.POST, produces = ControllerConstant.MIME_JSON, consumes = ControllerConstant.ALL)
 	@ResponseBody
 	public List<MatrixResponseObject> loadAdminRooms(@RequestHeader(value = ControllerConstant.TOKEN_HEADER, required = true) String token, HttpServletResponse httpResponse) throws Exception {
+		LOG.info("MatrixController - loadAdminRooms - token {}", token);
 		return matrixHandler.loadAdminRooms(token, httpResponse);
 	}
 	
@@ -109,6 +113,7 @@ public class MatrixController extends AbstractController {
 	@RequestMapping(value = "/getEmailsFromUsersOfMatrixRoomQrCode", method = RequestMethod.POST, produces = ControllerConstant.MIME_JSON, consumes = ControllerConstant.ALL)
 	@ResponseBody
 	public List<String> getEmailsFromUsersOfMatrixRoomQrCode(String matrixRoomId, String userEmail) {
+		LOG.info("MatrixController - getEmailsFromUsersOfMatrixRoomQrCode - matrixRoomId {}, userEmail - {}", matrixRoomId, userEmail);
 		return matrixHandler.getEmailsFromUsersOfMatrixRoomQrCode(matrixRoomId, userEmail);
 	}
 	

@@ -53,8 +53,7 @@ public class UserController extends AbstractController {
 	private UserHandler userHandler;
 
 	/**
-	 * 
-	 * @param token
+	 *
 	 * @param request
 	 * @return userToken
 	 * @throws EmailException
@@ -64,6 +63,7 @@ public class UserController extends AbstractController {
 	@RequestMapping(value = "/register", method = RequestMethod.POST, produces = ControllerConstant.ALL, consumes = ControllerConstant.MIME_JSON)
 	@ResponseBody
 	public void register(@RequestBody AuthInfoRequest request, HttpServletResponse httpResponse) throws UserAlreadyExistsException, EmailException, MatrixException {
+		LOG.info("UserController - register - request {}", request);
 		userHandler.register(request);
 	}
 
@@ -77,6 +77,7 @@ public class UserController extends AbstractController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST, produces = ControllerConstant.MIME_JSON, consumes = ControllerConstant.MIME_JSON)
 	@ResponseBody
 	public UserInfoResponse login(@RequestBody AuthInfoRequest request, HttpServletResponse httpResposne) throws NonValidLoginInformationException {
+		LOG.info("UserController - login - request {}", request);
 		return userHandler.login(request, httpResposne);
 	}
 
@@ -84,6 +85,7 @@ public class UserController extends AbstractController {
 	@RequestMapping(value = "/logout", method = RequestMethod.POST, produces = ControllerConstant.ALL, consumes = ControllerConstant.MIME_JSON)
 	@ResponseBody
 	public void logout(@RequestHeader(value = ControllerConstant.TOKEN_HEADER, required = true) String token, String deviceId, HttpServletResponse httpResposne) throws NonValidLoginInformationException, NotValidSessionException, PermissionDeniedException {
+		LOG.info("UserController - logout - token {}, deviceId - {}", token, deviceId);
 		userHandler.logout(deviceId, token, httpResposne);
 	}
 	
@@ -99,6 +101,7 @@ public class UserController extends AbstractController {
 	@RequestMapping(value = "/update", method = RequestMethod.POST, produces = ControllerConstant.MIME_JSON, consumes = ControllerConstant.MIME_JSON)
 	@ResponseBody
 	public UserInfoResponse update(@RequestHeader(value = ControllerConstant.TOKEN_HEADER, required = true) String token, @RequestBody UserBeanRequest request, HttpServletResponse httpResposne) throws NotValidSessionException, PermissionDeniedException {
+		LOG.info("UserController - update - token {}, request - {}", token, request);
 		return userHandler.update(token, request, httpResposne);
 	}
 	
@@ -106,6 +109,7 @@ public class UserController extends AbstractController {
 	@RequestMapping(value = "/delete", method = RequestMethod.POST, produces = ControllerConstant.ALL, consumes = ControllerConstant.ALL)
 	@ResponseBody
 	public void delete(@RequestHeader(value = ControllerConstant.TOKEN_HEADER, required = true) String token, long userId, HttpServletResponse httpResposne) throws NotValidSessionException, PermissionDeniedException {
+		LOG.info("UserController - delete - token {} - userId - {}", token, userId);
 		userHandler.delete(token, userId, httpResposne);
 	}
 
@@ -121,13 +125,12 @@ public class UserController extends AbstractController {
 	@RequestMapping(value = "/updatePassword", method = RequestMethod.POST, produces = ControllerConstant.MIME_JSON, consumes = ControllerConstant.ALL)
 	@ResponseBody
 	public void updatePassword(@RequestHeader(value = ControllerConstant.TOKEN_HEADER, required = true) String token, String password, HttpServletResponse httpResposne) throws NotValidSessionException, PermissionDeniedException {
+		LOG.info("UserController - updatePassword - token {} , password - {}", token, password);
 		userHandler.updatePassword(token, password, httpResposne);
 	}
 
 	/**
-	 * 
-	 * @param token
-	 * @param request
+	 *
 	 * @return
 	 * @throws PermissionDeniedException
 	 * @throws NotValidRecoverPswdTokenException
@@ -136,13 +139,13 @@ public class UserController extends AbstractController {
 	@RequestMapping(value = "/updatePswdRecovery", method = RequestMethod.POST, consumes = ControllerConstant.MIME_JSON)
 	@ResponseBody
 	public void updateFromPswdRecovery(@RequestHeader(value = ControllerConstant.TOKEN_RECOVERY_PSWD_TOKEN, required = true) String emailToken, String password) throws NotValidSessionException, NotValidRecoverPswdTokenException {
+		LOG.info("UserController - updateFromPswdRecovery - emailToken {}, password - {}", emailToken, password);
 		userHandler.updatePswdRecovery(emailToken, password);
 	}
 
 	/**
 	 * 
 	 * @param token
-	 * @param request
 	 * @return
 	 * @throws PermissionDeniedException
 	 */
@@ -150,6 +153,7 @@ public class UserController extends AbstractController {
 	@RequestMapping(value = "/load", method = RequestMethod.POST, produces = ControllerConstant.MIME_JSON, consumes = ControllerConstant.MIME_JSON)
 	@ResponseBody
 	public UserBeanResponse load(@RequestHeader(value = ControllerConstant.TOKEN_HEADER, required = true) String token, HttpServletResponse httpResposne) throws NotValidSessionException, PermissionDeniedException {
+		LOG.info("UserController - load - token {}", token);
 		return userHandler.load(token, httpResposne);
 	}
 
@@ -164,6 +168,7 @@ public class UserController extends AbstractController {
 	@RequestMapping(value = "/forgotPassword", method = RequestMethod.POST, produces = ControllerConstant.ALL, consumes = ControllerConstant.MIME_JSON)
 	@ResponseBody
 	public void forgotPassword(String login) throws EmailException, EntityDoesntExistException {
+		LOG.info("UserController - forgotPassword - login {}", login);
 		userHandler.forgotPassword(login);
 	}
 
@@ -172,6 +177,7 @@ public class UserController extends AbstractController {
 	@ResponseBody
 	public void validateResetPasswordToken(@RequestParam(required = true) String token, HttpServletResponse httpResposne) throws NotValidRecoverPswdTokenException {
 		// TODO toto neviem ci je dobre
+		LOG.info("UserController - validateResetPasswordToken - token {}", token);
 		userHandler.validateResetPasswordToken(token);
 	}
 	
@@ -179,6 +185,7 @@ public class UserController extends AbstractController {
 	@RequestMapping(value = "/validateToken", method = RequestMethod.POST, consumes = ControllerConstant.MIME_JSON)
 	@ResponseBody
 	public void validateToken(@RequestParam(required = true) String token, HttpServletResponse httpResponse) throws NotValidSessionException, PermissionDeniedException {
+		LOG.info("UserController - validateToken - token {}", token);
 		userHandler.validateToken(token, httpResponse);
 	}
 

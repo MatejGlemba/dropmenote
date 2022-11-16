@@ -47,6 +47,7 @@
 	<modules>
 		<module>./dropmenote-ws</module>
 		<module>./dropmenote-db</module>
+		<module>./matrix-java-sdk</module>
 	</modules>
 
 	<build>

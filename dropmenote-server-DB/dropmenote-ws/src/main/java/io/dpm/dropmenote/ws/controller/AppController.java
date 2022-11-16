@@ -43,6 +43,7 @@ public class AppController {
     @RequestMapping(value = "/appInfo", method = RequestMethod.GET)
     @ResponseBody
     public AppInfoResponse appInfo() {
+        LOG.info("AppController - appInfo");
         return appHandler.appInfo();
     }
 

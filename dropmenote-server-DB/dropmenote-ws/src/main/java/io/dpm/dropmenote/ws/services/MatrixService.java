@@ -45,15 +45,15 @@ import io.dpm.dropmenote.ws.utils.WebSocketUtil;
 import io.dpm.dropmenote.ws.websocket.session.ChatSessionInfo;
 import io.dpm.dropmenote.ws.websocket.websocketObject.websocketResponse.NotificationTextMessageResponse;
 import io.dpm.dropmenote.ws.websocket.websocketObject.websocketResponse.TextMessageResponse;
-import io.kamax.matrix._MatrixID;
-import io.kamax.matrix.client._MatrixClient;
-import io.kamax.matrix.client._SyncData;
-import io.kamax.matrix.client._SyncData.InvitedRoom;
-import io.kamax.matrix.client._SyncData.JoinedRoom;
-import io.kamax.matrix.client.regular.SyncOptions;
-import io.kamax.matrix.event._MatrixPersistentEvent;
-import io.kamax.matrix.hs._MatrixRoom;
-import io.kamax.matrix.json.event.MatrixJsonRoomMessageEvent;
+import io.dpm.matrix.api.MatrixID;
+import io.dpm.matrix.client.api.MatrixClient;
+import io.dpm.matrix.client.api.SyncData;
+import io.dpm.matrix.client.api.SyncData.InvitedRoom;
+import io.dpm.matrix.client.api.SyncData.JoinedRoom;
+import io.dpm.matrix.client.regular.SyncOptions;
+import io.dpm.matrix.event.api.MatrixPersistentEvent;
+import io.dpm.matrix.hs.api.MatrixRoom;
+import io.dpm.matrix.json.event.MatrixJsonRoomMessageEvent;
 import lombok.Data;
 
 /**
@@ -208,11 +208,11 @@ public class MatrixService {
 		final String pass = "5$24TgJckgk$";
 
 		// Login
-		_MatrixClient client = MatrixUtil.login(server, user, pass);
+		MatrixClient client = MatrixUtil.login(server, user, pass);
 
 		// String roomId = "id z DB podla QR";
 		String roomId = qrcode;
-		_MatrixRoom room = client.getJoinedRooms().stream().filter(r -> r.getAddress().equals(roomId)).findFirst()
+		MatrixRoom room = client.getJoinedRooms().stream().filter(r -> r.getAddress().equals(roomId)).findFirst()
 				.orElse(null);
 
 		if (room == null) {
@@ -239,13 +239,13 @@ public class MatrixService {
 		final String pass = "5$24TgJckgk$";
 
 		// Login
-		_MatrixClient client = MatrixUtil.login(server, user, pass);
+		MatrixClient client = MatrixUtil.login(server, user, pass);
 
 		// Zisti ci je konverzacia uz vytvorena
-		_MatrixRoom room;
+		MatrixRoom room;
 		if (createRoom) {
 			// zisti kto su admini ku qrkodu aby boli automaticky pridany do roomy
-			Set<_MatrixID> admini = new HashSet<_MatrixID>();
+			Set<MatrixID> admini = new HashSet<MatrixID>();
 			admini.add(MatrixUtil.getMatrixIdObject("peter-s2", server));
 
 			room = MatrixUtil.createRoom(client, admini);
@@ -282,7 +282,7 @@ public class MatrixService {
 		HashMap<String, InboxRoomInfo> data = new HashMap<>();
 
 		// Login
-		_MatrixClient client;
+		MatrixClient client;
 		try {
 			client = MatrixUtil.login(server, user, password);
 		} catch (Exception e) {
@@ -295,7 +295,7 @@ public class MatrixService {
 				+ " \"state\": { \"types\": [\"none\"] }" + ", \"account_data\": { \"types\": [\"none\"] }"
 				+ ", \"ephemeral\": { \"types\": [\"none\"] }"
 				+ ", \"timeline\": { \"types\": [\"m.room.message\"], \"limit\": 1 }" + " } " + "}";
-		_SyncData syncData = client.sync(SyncOptions.build().setFilter(filter).get());
+		SyncData syncData = client.sync(SyncOptions.build().setFilter(filter).get());
 		// System.out.println(syncData.getJson());
 
 		// We check the invited rooms
@@ -310,7 +310,7 @@ public class MatrixService {
 
 		// We check the joined rooms
 		for (JoinedRoom room : syncData.getRooms().getJoined()) {
-			List<_MatrixPersistentEvent> msgs = room.getTimeline().getEvents().stream()
+			List<MatrixPersistentEvent> msgs = room.getTimeline().getEvents().stream()
 					.filter(ev -> "m.room.message".contentEquals(ev.getType())).collect(Collectors.toList());
 			if (msgs.size() <= 0) {
 				// no messages
@@ -474,7 +474,7 @@ public class MatrixService {
 		}
 
 		// Login
-		_MatrixClient client = MatrixUtil.login(matrixServer, matrixUsername, matrixPassword);
+		MatrixClient client = MatrixUtil.login(matrixServer, matrixUsername, matrixPassword);
 
 		// Filter sa da pouzit na lepsi performance, teraz nam chodia zbitocne data
 		String filter = "{" + " \"presence\": { \"types\": [\"none\"] }"
@@ -491,7 +491,7 @@ public class MatrixService {
 			// Musim kontrolovat ci stale je WS session otvorena
 			while (!Thread.currentThread().isInterrupted() && session.isOpen()) {
 				try {
-					_SyncData data = client.sync(SyncOptions.build().setFilter(filter).setSince(syncToken).get());
+					SyncData data = client.sync(SyncOptions.build().setFilter(filter).setSince(syncToken).get());
 
 					// We check the invited rooms
 					try {
@@ -514,7 +514,7 @@ public class MatrixService {
 						 * room
 						 */
 
-						List<_MatrixPersistentEvent> msgs = joinedRoom.getTimeline().getEvents().stream()
+						List<MatrixPersistentEvent> msgs = joinedRoom.getTimeline().getEvents().stream()
 								.filter(ev -> "m.room.message".contentEquals(ev.getType())
 										&& !matrixUsername.equals(ev.getSender().getLocalPart()))
 								.collect(Collectors.toList());
@@ -524,7 +524,7 @@ public class MatrixService {
 							continue;
 						}
 
-						_MatrixRoom matrixRoom = client.getRoom(joinedRoom.getId());
+						MatrixRoom matrixRoom = client.getRoom(joinedRoom.getId());
 						MatrixJsonRoomMessageEvent msg = new MatrixJsonRoomMessageEvent(
 								msgs.get(msgs.size() - 1).getJson());
 
@@ -698,10 +698,10 @@ public class MatrixService {
 			}
 		}
 		// Login
-		_MatrixClient client = MatrixUtil.login(matrixServer, matrixUsername, matrixPassword);
+		MatrixClient client = MatrixUtil.login(matrixServer, matrixUsername, matrixPassword);
 
 		// Pridaj adminov QR kodu
-		Set<_MatrixID> admins = new HashSet<_MatrixID>();
+		Set<MatrixID> admins = new HashSet<MatrixID>();
 
 
 		qrCodeBean.getSharedUsers().forEach((user) -> {
@@ -712,7 +712,7 @@ public class MatrixService {
 		admins.add((MatrixUtil.getMatrixIdObject(qrCodeBean.getOwner().getMatrixUsername(), matrixServer)));
 
 		// Vytvor
-		_MatrixRoom room = MatrixUtil.createRoom(client, admins);
+		MatrixRoom room = MatrixUtil.createRoom(client, admins);
 		client.logout();
 
 		// Sparuj u nas roomId uzivatela a QR a uloz do DB
@@ -759,17 +759,17 @@ public class MatrixService {
 		registerMatrixUser(ConfigurationConstant.MATRIX_SERVER, login, pass);
     	
 		// Login
-		_MatrixClient client = MatrixUtil.login(matrixServer, login, pass);
+		MatrixClient client = MatrixUtil.login(matrixServer, login, pass);
 
 		// Pridaj adminov QR kodu
-		Set<_MatrixID> admins = new HashSet<_MatrixID>();
+		Set<MatrixID> admins = new HashSet<MatrixID>();
 		qrCodeBean.getSharedUsers().forEach((user) -> {
 			admins.add(MatrixUtil.getMatrixIdObject(user.getMatrixUsername(), matrixServer));
 		});
 		admins.add((MatrixUtil.getMatrixIdObject(qrCodeBean.getOwner().getMatrixUsername(), matrixServer)));
 
 		// Vytvor
-		_MatrixRoom room = MatrixUtil.createRoom(client, admins);
+		MatrixRoom room = MatrixUtil.createRoom(client, admins);
 		client.logout();
 
 		// Sparuj u nas roomId uzivatela a QR a uloz do DB
@@ -807,10 +807,10 @@ public class MatrixService {
 
 		// Login
 		LOG.debug("Logging " + matrixUsername + " to matrix");
-		_MatrixClient client = MatrixUtil.login(matrixServer, matrixUsername, matrixPassword);
+		MatrixClient client = MatrixUtil.login(matrixServer, matrixUsername, matrixPassword);
 		chatSessionInfo.set(session.getId(), client);
 		chatSessionInfo.set(session.getId(), matrixRoomId);
-		_MatrixRoom matrixRoom = client.getRoom(matrixRoomId);
+		MatrixRoom matrixRoom = client.getRoom(matrixRoomId);
 
 		// Filter sa da pouzit na lepsi performance, teraz nam chodia zbitocne data
 		final int messagesLimit = 2000; // Kolko poslednych sprav sa zobrazi v chate
@@ -827,7 +827,7 @@ public class MatrixService {
 			// Musim kontrolovat ci stale je WS session otvorena
 			while (!Thread.currentThread().isInterrupted() && session.isOpen()) {
 				try {
-					_SyncData data = client.sync(SyncOptions.build().setFilter(filter).setSince(syncToken).get());
+					SyncData data = client.sync(SyncOptions.build().setFilter(filter).setSince(syncToken).get());
 
 					// We check the invited rooms
 					try {
@@ -847,7 +847,7 @@ public class MatrixService {
 						// HashMap<matrixUsername, UserInfo>
 						HashMap<String, UserInfo> matrixUsersMap = new HashMap<>();
 						// We check events in room
-						for (_MatrixPersistentEvent event : joinedRoom.getTimeline().getEvents()) {
+						for (MatrixPersistentEvent event : joinedRoom.getTimeline().getEvents()) {
 							// We only want to notify room messages
 							if ("m.room.message".contentEquals(event.getType())) {
 								MatrixJsonRoomMessageEvent msg = new MatrixJsonRoomMessageEvent(event.getJson());
@@ -1212,12 +1212,12 @@ public class MatrixService {
 		}
 
 		// Login
-		_MatrixClient client = MatrixUtil.login(ConfigurationConstant.MATRIX_SERVER, owner.getMatrixUsername(),
+		MatrixClient client = MatrixUtil.login(ConfigurationConstant.MATRIX_SERVER, owner.getMatrixUsername(),
 				owner.getMatrixPassword());
 
 		// Invite user to rooms
 		matrixRooms.forEach((matrixRoom) -> {
-			_MatrixRoom room = client.getRoom(matrixRoom.getMatrixRoomId());
+			MatrixRoom room = client.getRoom(matrixRoom.getMatrixRoomId());
 			try {
 				room.invite(MatrixUtil.getMatrixIdObject(newShare.getMatrixUsername(), ConfigurationConstant.MATRIX_SERVER));
 			} catch (Exception e) {
@@ -1242,12 +1242,12 @@ public class MatrixService {
 		}
 
 		// Login
-		_MatrixClient client = MatrixUtil.login(ConfigurationConstant.MATRIX_SERVER, newShare.getMatrixUsername(),
+		MatrixClient client = MatrixUtil.login(ConfigurationConstant.MATRIX_SERVER, newShare.getMatrixUsername(),
 				newShare.getMatrixPassword());
 
 		// Invite user to rooms
 		matrixRooms.forEach((matrixRoom) -> {
-			_MatrixRoom room = client.getRoom(matrixRoom.getMatrixRoomId());
+			MatrixRoom room = client.getRoom(matrixRoom.getMatrixRoomId());
 			try {
 				room.leave();
 			} catch (Exception e) {

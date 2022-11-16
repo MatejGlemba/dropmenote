@@ -71,6 +71,7 @@ public class DmnWebController extends AbstractController {
 //		
 //		if (whitelist.contains(ipAddress)) {
 			// Append file into response header
+		LOG.info("DmnWebController - generateDmnCodeAndCSV - dmnCount {}", dmnCount);
 			dmnWebHandler.generateDmnCodeAndCSV(dmnCount, httpResposne);
 //		} else {
 //			throw new PermissionDeniedException("Not allowed to call this method!");

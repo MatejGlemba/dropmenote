@@ -28,7 +28,7 @@ import io.dpm.dropmenote.ws.utils.AESCipher;
 import io.dpm.dropmenote.ws.websocket.session.ChatSessionInfo;
 import io.dpm.dropmenote.ws.websocket.websocketObject.websocketRequest.LoginRequest;
 import io.dpm.dropmenote.ws.websocket.websocketObject.websocketRequest.WebsocketTextMessageRequest;
-import io.kamax.matrix.hs._MatrixRoom;
+import io.dpm.matrix.hs.api.MatrixRoom;
 
 @Service
 public class WebSocketChatHandlerService {
@@ -149,7 +149,7 @@ public class WebSocketChatHandlerService {
 			throw new Exception("Invalid session data");
 		}
 		
-		_MatrixRoom room = sessionInfo.getMatrixClient().getRoom(sessionInfo.getMatrixRoomId());
+		MatrixRoom room = sessionInfo.getMatrixClient().getRoom(sessionInfo.getMatrixRoomId());
 		if(room == null) {
 			throw new Exception("Invalid room");
 		}

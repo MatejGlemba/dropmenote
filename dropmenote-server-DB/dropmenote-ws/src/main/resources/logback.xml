@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration debug="false" scanPeriod="30 seconds">
-	<contextName>starbug-dropmenote-ws</contextName>
+	<contextName>dropmenote-ws</contextName>
 	<jmxConfigurator />
 
 	<appender name="file"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<File>./logs/starbug-dropmenote-ws.log</File>
+		<File>./logs/dropmenote-ws.log</File>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<FileNamePattern>/usr/share/tomcat7/logs/starbug-dropmenote-ws.%d{yyyy-MM-dd}.log
+			<FileNamePattern>/usr/share/tomcat7/logs/dropmenote-ws.%d{yyyy-MM-dd}.log
 			</FileNamePattern>
 			<MaxHistory>7</MaxHistory>
 		</rollingPolicy>

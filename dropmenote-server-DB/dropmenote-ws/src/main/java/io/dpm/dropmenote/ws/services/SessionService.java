@@ -138,6 +138,7 @@ public class SessionService {
 	 * @throws NotValidSessionException
 	 */
 	public SessionBean validate(String token) throws NotValidSessionException {
+		//sessionRepository.findAll().forEach(e -> LOG.info("{}, {}", e.getDeviceId(), e.getToken()));
 		SessionBean sessionBean = SessionDto.convertToBean(sessionRepository.findByToken(token)); 
 		if (sessionBean == null || sessionBean.getId() == 0) {
 			throw new NotValidSessionException("User doesn't exist in the session.");

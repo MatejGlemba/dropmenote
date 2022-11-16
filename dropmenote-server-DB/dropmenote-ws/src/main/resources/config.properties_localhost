@@ -27,6 +27,6 @@ codenameone.api.token=D4C79E15-6E7E-42F5-8A6A-B7DBF956CA51
 #############################################
 web.app.url=http://192.168.88.205:3000
 web.app.urlparam.scan=/#/infoqrcode?q=
-image.file.url=http://192.168.88.205:8080/starbug-dropmenote-ws/images/
+image.file.url=http://192.168.88.205:8080/dropmenote-ws/images/
 image.file.path=C:/Workspace/server_images/dropmenote/images/
 secret.crypting.key=StarbugIsSearchingStarsForBugsWZ

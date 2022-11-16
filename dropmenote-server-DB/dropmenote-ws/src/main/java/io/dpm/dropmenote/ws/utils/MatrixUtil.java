@@ -8,12 +8,12 @@ import java.util.Set;
 import com.google.gson.JsonElement;
 
 import io.dpm.dropmenote.ws.services.helpers.StringHelper;
-import io.kamax.matrix._MatrixID;
-import io.kamax.matrix.client.MatrixPasswordCredentials;
-import io.kamax.matrix.client._MatrixClient;
-import io.kamax.matrix.client.regular.MatrixHttpClient;
-import io.kamax.matrix.hs._MatrixRoom;
-import io.kamax.matrix.room._RoomCreationOptions;
+import io.dpm.matrix.api.MatrixID;
+import io.dpm.matrix.client.MatrixPasswordCredentials;
+import io.dpm.matrix.client.api.MatrixClient;
+import io.dpm.matrix.client.regular.MatrixHttpClient;
+import io.dpm.matrix.hs.api.MatrixRoom;
+import io.dpm.matrix.room.api.RoomCreationOptions;
 import java8.util.Optional;
 
 /**
@@ -41,14 +41,14 @@ public class MatrixUtil {
 	 * @return klient objekt
 	 * @throws Exception
 	 */
-	public static _MatrixClient register(String host, String username, String password) throws Exception {
+	public static MatrixClient register(String host, String username, String password) throws Exception {
 		URL url;
 		try {
 			url = new URL("https://" + host);
 		} catch (MalformedURLException e) {
 			throw new Exception(e);
 		}
-		_MatrixClient client = new MatrixHttpClient(url);
+		MatrixClient client = new MatrixHttpClient(url);
 		MatrixPasswordCredentials credentials = new MatrixPasswordCredentials(username, password);
 		client.register(credentials , "", false);
 
@@ -62,14 +62,14 @@ public class MatrixUtil {
 	 * @return klient objekt
 	 * @throws Exception
 	 */
-	public static _MatrixClient login(String host, String username, String password) throws Exception {
+	public static MatrixClient login(String host, String username, String password) throws Exception {
 		URL url;
 		try {
 			url = new URL("https://" + host);
 		} catch (MalformedURLException e) {
 			throw new Exception(e);
 		}
-		_MatrixClient client = new MatrixHttpClient(url);
+		MatrixClient client = new MatrixHttpClient(url);
 		client.login(new MatrixPasswordCredentials(username, password));
 
 		return client;
@@ -82,13 +82,13 @@ public class MatrixUtil {
 	 * @param invitesSet zoznam adminov v konverzacii
 	 * @return
 	 */
-	public static _MatrixRoom createRoom(_MatrixClient client, Set<_MatrixID> invitesSet) {
+	public static MatrixRoom createRoom(MatrixClient client, Set<MatrixID> invitesSet) {
 		Optional<String> name = Optional.empty();
 		Optional<String> aliasName = Optional.empty();
 		Optional<String> topic = Optional.empty();
 		Boolean guestCanJoin = false;
-		Optional<Set<_MatrixID>> invites = invitesSet == null?Optional.empty():Optional.of(invitesSet);
-		_RoomCreationOptions options = new _RoomCreationOptions() {
+		Optional<Set<MatrixID>> invites = invitesSet == null?Optional.empty():Optional.of(invitesSet);
+		RoomCreationOptions options = new RoomCreationOptions() {
 			
 			@Override
 			public Optional<Boolean> isGuestCanJoin() {
@@ -121,7 +121,7 @@ public class MatrixUtil {
 			}
 			
 			@Override
-			public Optional<Set<_MatrixID>> getInvites() {
+			public Optional<Set<MatrixID>> getInvites() {
 				return invites;
 			}
 			
@@ -139,8 +139,8 @@ public class MatrixUtil {
 	}
 	
 	
-	public static _MatrixID getMatrixIdObject(String username, String server) {
-		_MatrixID user = new _MatrixID() {
+	public static MatrixID getMatrixIdObject(String username, String server) {
+		MatrixID user = new MatrixID() {
 			
 			@Override
 			public boolean isValid() {
@@ -168,7 +168,7 @@ public class MatrixUtil {
 			}
 			
 			@Override
-			public _MatrixID canonicalize() {
+			public MatrixID canonicalize() {
 				if(isValid()) {
 					return this;
 				}else {

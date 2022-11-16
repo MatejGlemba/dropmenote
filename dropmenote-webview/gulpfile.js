@@ -66,7 +66,7 @@ var jsFilesLocation = [
 gulp.task('build-js', function () {
     return gulp.src(jsFilesLocation) //
         .pipe(ngAnnotate()) //
-        .pipe(concat('starbug-dropmenote.min.js')) //
+        .pipe(concat('dropmenote.min.js')) //
         // .pipe(uglifly()) //
         //.pipe(js_obfuscator({}, ['./starbug-dropmenote.min.js'])) //
         .pipe(gulp.dest('./')) //

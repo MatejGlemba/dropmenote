@@ -15,7 +15,7 @@
 
 
 	<properties>
-		<war.name>dropmenote-ws-${project.version}</war.name>
+		<war.name>dropmenote-ws</war.name>
 	</properties>
 	<!-- QR code generator -->
 	<repositories>
@@ -26,13 +26,13 @@
 	</repositories>
 
 	<dependencies>
-		<dependency>
+		<!--<dependency>
 			<groupId>io.kamax</groupId>
 			<artifactId>matrix-java-sdk</artifactId>
 			<version>0.0.18</version>
 			<scope>system</scope>
 			<systemPath>${project.basedir}/lib/matrix-java-sdk-0.0.18-16.jar</systemPath>
-		</dependency>
+		</dependency>-->
 		<!-- http://www.baeldung.com/swagger-2-documentation-for-spring-rest-api -->
 		<dependency>
 			<groupId>io.springfox</groupId>
@@ -191,6 +191,11 @@
 		<dependency>
 			<groupId>io.dpm</groupId>
 			<artifactId>dropmenote-db</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>io.dpm</groupId>
+			<artifactId>matrix-java-sdk</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>

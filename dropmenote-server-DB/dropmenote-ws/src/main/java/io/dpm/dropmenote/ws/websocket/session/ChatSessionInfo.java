@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import io.dpm.dropmenote.ws.constants.ConfigurationConstant;
-import io.kamax.matrix.client._MatrixClient;
+import io.dpm.matrix.client.api.MatrixClient;
 import lombok.Data;
 
 
@@ -51,7 +51,7 @@ public class ChatSessionInfo {
      * @param sessionId
      * @param client
      */
-    public void set(String sessionId, _MatrixClient client) {
+    public void set(String sessionId, MatrixClient client) {
     	Info prev = map.get(sessionId);
     	if(prev == null) {
     		Info n = new Info();
@@ -103,7 +103,7 @@ public class ChatSessionInfo {
     
     @Data
     public static class Info{
-    	_MatrixClient matrixClient;
+    	MatrixClient matrixClient;
     	String matrixRoomId;
     }
 

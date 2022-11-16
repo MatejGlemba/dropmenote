@@ -46,6 +46,7 @@ public class PushNotificationController extends AbstractController {
 	@RequestMapping(value = "/sendPush", method = RequestMethod.POST, consumes = ControllerConstant.ALL)
 	@ResponseBody
 	public void sendPush(@RequestHeader(value = ControllerConstant.TOKEN_HEADER, required = true) String token, String message, String[] deviceIds, HttpServletResponse httpResponse) throws NotValidSessionException, PermissionDeniedException, IOException {
+		LOG.info("PushNotificationController - sendPush - token {}, message - {}, deviceIds - {}", token, message, deviceIds);
 		pushHandler.sendPush(token, message, deviceIds, httpResponse);
 	}
 }
