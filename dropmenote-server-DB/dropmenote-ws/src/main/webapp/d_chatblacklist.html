@@ -1,0 +1,36 @@
+<div class="dialog-header" >
+    <div>
+        <span ng-click="closeDialog()" name="appBackButton" class="pull-right"><img src="app/assets/img/others/cross.svg" height="20px"/> </span>
+    </div>
+    <h4 class="headline" style="margin-bottom: 5px; margin-top:30px">             
+        List of users in Chat
+    </h4>
+    <div class="small-text" style="margin-top: 0px">
+        <h6>Select the user you want to block</h6>
+    </div>
+</div>
+<div class="scrollable" style="padding-top: 105px;">
+    <div class="scrollable-content section background" style="overflow-y:scroll;">
+
+        <div class="qrcodelist-spacer">
+        </div>
+
+        <div ng-if="blacklist.length < 1" class="text-center">
+            You have no users
+        </div>
+        <div class="list-group">
+            <div class="list-group-item universal-table-link" 
+                ng-click="click_on_user(blacklistObj)" ng-repeat="blacklistObj in blacklist"
+                ng-style="$index == 0 && {'border-top': '1px solid #cacaca'} || $index !=0 && {'border-top': 'none'}">
+                <table class="universal-table" style="height:50px">
+                    <tr>
+                        <td class="universal-table-name" colspan="2">{{blacklistObj.alias}}</td>
+                        <td class="universal-table-right" rowspan="2">
+                            <img src="app/assets/img/arrowbutton.svg" height="15px" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

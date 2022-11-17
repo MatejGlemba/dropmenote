@@ -1,0 +1,76 @@
+<div ng-controller="InfoqrcodeController">
+
+    <div ui-content-for="title">
+        <div ng-if="isScreenVisible">
+            {{qrcode.name && isScreenVisible ? qrcode.name : ""}}&nbsp;
+        </div>
+        <div ng-if="isScreenVisible == false">
+            
+        </div>
+    </div>
+    <div ui-content-for="title_description">
+        <div ng-if="isScreenVisible">
+            {{ "DMN Code information" }}
+        </div>
+        <div ng-if="isScreenVisible == false">
+            {{ "Loading..." }}
+        </div>
+    </div>
+    <div ui-content-for="title_navigation">
+        <div class="navbar-left-menu-button" ng-if="(token == undefined || token == '' || token == null)" name="appBackButton"> 
+        </div>
+        <div class="navbar-left-menu-button" ui-toggle="uiSidebarRight" ng-if="(token != undefined && token != '' && token != null)" name="appBackButton">
+            <img src="app/assets/img/starbug_navbar_menu_icon1.svg" class="navbar-img-right-side">
+        </div>
+    </div>  
+    <div class="scrollable page-fade-animation">
+        <div class="scrollable-content section background" ng-if="isScreenVisible">
+            <!-- pokial je v data-ng-src obrazok, tak ho zobrazi. Pokial nieje, zobrazi to co je v src-->
+            <img data-ng-src="{{qrcode.photo}}" style="width:100%"> 
+
+            <div class="saveqrcode-group" ng-if="qrcode.description">
+                <label class="saveqrcode-label-form">Description</label>
+                <div class="qrcodeinfo-description" ng-bind-html="qrcode.description | trustHtml">
+                    {{qrcode.description ? "" : "DMN Code description"}}
+                </div>
+            </div>
+           
+            <div class="saveqrcode-group" ng-if="qrcode.link">
+                <label class="saveqrcode-label-form">Website</label>
+                <div class="qrcodeinfo-description">
+                    <a target="_blank" href="{{qrcode.link}}">{{qrcode.link}}</a>
+                    <!-- {{qrcode.link ? qrcode.link : "DMN Code website"}} -->
+                    <!-- <a src="qrcode.link" href="#">qrcode.link</a>  -->
+                </div>
+            </div>
+            
+
+            <div class="saveqrcode-group">
+                <label class="saveqrcode-label-form">Owner</label>
+                <div class="qrcodeinfo-description">
+                    {{qrcode.ownerAlias ? qrcode.ownerAlias : "Owner alias"}}
+                </div>
+            </div>
+            <br/><br/>
+            <br/><br/>
+            <br/>
+            <br/>
+            <div class="qrcodeinfo-chat-button" 
+                 ng-click="click_open_chat()" ng-if="isChatButtonVisible">
+                <div class="saveqrcode-group-btn" style="padding: 5px 10px; margin-bottom: 0px !important; background: #259fda; color:white;border-radius: 10px;">
+                    <table>
+                        <tr>
+                            <td rowspan="2">
+                                <img src="app/assets/img/others/chat_button.svg" height="30px" width="30px"/>
+                            </td>
+                            <td style="padding: 0px 0px 0px 10px; font-size: 17px; font-weight: 500 !important;">Start Chat room</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 0px 0px 0px 10px; font-size: 12px; font-weight: 300 !important;">Send message directly to owner</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

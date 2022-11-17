@@ -1,0 +1,47 @@
+<div class="dialog-header" >
+    <div>
+        <span ng-click="closeDialog()" name="appBackButton" class="pull-right"><img src="app/assets/img/others/cross.svg" height="20px"/> </span>
+    </div>
+    <h4 class="headline" style="margin-bottom: 5px; margin-top:30px">             
+        Inbox Item filter
+    </h4>
+    <div class="small-text" style="margin-top: 0px">
+        <h6>Select DMN Item to show its messages</h6>
+    </div>
+</div>
+<div class="scrollable" style="padding-top: 105px;">
+    <div class="scrollable-content section background" style="overflow-y:scroll;">
+
+        <div class="qrcodelist-spacer">
+        </div>
+
+        <div ng-if="qrcodelist.length < 1" class="text-center">
+            You have no DMN Codes
+        </div>
+
+        <div class="list-group">
+            <a ng-click="click_on_qrcode(qrcode)"
+               ng-repeat="qrcode in qrcodelist | orderBy : orderByParam : orderByReverse"
+               href="#/inbox?qrcode_id={{qrcode.id}}&qrcode_name={{qrcode.name}}"
+               onclick="location.hash='';"
+               class="list-group-item list-group-table-padding-item universal-table-link" ng-style="$index == 0 && {'border-top': '1px solid #cacaca'} || $index !=0 && {'border-top': 'none'}">
+                <table class="universal-table">
+                    <tr>
+                        <td class="universal-table-image-wrapper" rowspan="2">
+                            <img ng-if="(qrcode.photo != null && qrcode.photo != '' && qrcode.photo != undefined)" ng-src="{{qrcode.photo}}" class="universal-table-image" />
+                            <img ng-if="(qrcode.photo == null || qrcode.photo == '' || qrcode.photo == undefined)" src="app/assets/img/qr_code_noicon.svg" class="universal-table-image" style="background: #259fda;"/>
+                        </td>
+                        <td class="universal-table-name" colspan="2">{{qrcode.name}}</td>
+                        <td class="universal-table-date">
+                            {{ qrcode.created | date:'dd.MM.yyyy'}}
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="universal-table-description text-2lines-preview">{{qrcode.description}}</td>
+                    </tr>
+                </table>
+            </a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,29 @@
+<md-dialog class="savedata-dialog">
+    <div class="scrollable">
+        <div class="scrollable-content section savedata-dialog-content" >
+            <span class="savedata-dialog-title">
+                Save changes?
+            </span>
+            <div class="savedata-dialog-subtitle">
+                <span>Do you want to save new changes?</span>
+            </div>
+            <table style="width:100%;">
+                <tbody>
+                    <tr>
+                        <td style="width:50%; margin:auto;">
+                            <div class="savedata-dialog-button-save" ng-click="save();">
+                                Save
+                            </div>
+                        </td>
+                        <td style="width:50%; margin:auto; padding: auto;" ng-click="cancel();">
+                            <div class="savedata-dialog-button-cancel">
+                                Cancel
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>       
+        </div>
+    </div>
+</md-dialog>
+

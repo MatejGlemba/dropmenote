@@ -1,0 +1,32 @@
+<div class="dialog-header" >
+    <div>
+        <span ng-click="closeDialog()" name="appBackButton" class="pull-right"><img src="app/assets/img/others/cross.svg" height="20px"/> </span>
+    </div>
+    <h4 class="headline" style="margin-bottom: 5px; margin-top:30px">             
+        DMN Share
+    </h4>
+    <div class="small-text" style="margin-top: 0px">
+        <h6>Remove user from DMN Code sharing list</h6>
+    </div>
+</div>
+<div class="scrollable" style="padding-top: 105px;"> 
+    <div class="scrollable-content section background" style="overflow-y:scroll;">
+        <form role="form" name="qrcodeshare_form">
+            <fieldset>
+                <div class="saveqrcode-group">
+                    <label class="saveqrcode-label-form">Email</label>
+                    <div class="saveqrcode-group-inner">
+                        <span class="form-control input-flat">{{shareUserLogin}}</span>
+                    </div>
+                </div>
+            </fieldset>
+            
+            <div class="saveqrcode-group-btn">
+                <div class="btn-red btn-primary btn-block" ng-click="click_qrcodeshare_delete()">
+                    REMOVE SHARE
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+

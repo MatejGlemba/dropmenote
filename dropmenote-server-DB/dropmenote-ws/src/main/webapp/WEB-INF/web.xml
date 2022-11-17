@@ -37,7 +37,7 @@
 	
 	<servlet-mapping>
 		<servlet-name>dispatcher</servlet-name>
-		<url-pattern>/*</url-pattern>
+		<url-pattern>/dropmenote-ws/*</url-pattern>
 	</servlet-mapping>
 	
 	<resource-ref>

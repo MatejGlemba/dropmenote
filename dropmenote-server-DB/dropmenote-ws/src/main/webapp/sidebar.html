@@ -1,0 +1,90 @@
+<div class="scrollable"  ng-controller="SidebarController">
+    <div class="navbar sidebar-app navbar-absolute-top">
+
+        <div class="scrollable-header app-name sidebar-header">
+            <img class="sidebar-logo-img" src="app\assets\img\sidebar\sidebar_logo.svg">
+            <h4 class="headline" style="margin-top: 10px;">
+                <img class="sidebar-chaticon" src="app/assets/img/profile_icons/{{userIcon && userIcon != 'null' ? userIcon + '.svg' : 'P1.svg'}}"/>
+                <div  class="sidebar-icon-and-text">
+                    <span class="sidebar-alias">{{(!userAlias || userAlias == 'null') ? 'Anonymous' : userAlias }}</span><br>
+                    <span class="normal-text">{{(!userLogin || userLogin == 'null') ? 'Unknown email' : userLogin}}</span>
+                </div>
+            </h4>
+        </div>
+
+    </div>
+    <div class="scrollable-content nav-side-bar">
+        <div class="list-group" ui-turn-off="uiSidebarRight" style="margin-top: 5px !important;">
+            <div id="qrScanForApp" class="list-group-item sidebar-group" onclick="sendMessageToCn1('openScanner#STARBUG#');">
+                <div class="navigation-group-icn-image">
+                    <img src="app\assets\img\sidebar\sidebar_scan_qr_{{isActive('/infoqrcode')}}.svg" class="sidebar-icon" >
+                </div>
+                <div class="navigation-group-icn-text">
+                    <label class="small-headline sidebar-item-header {{isActive('/infoqrcode') ? 'sidebar-selected-title' : ''}}">Scan</label><br>
+                </div> 
+            </div>
+            <div class="nav-side-bar-separator"></div>
+            <a class="list-group-item sidebar-group" href="#/saveqrcode">
+                <div class="navigation-group-icn-image">
+                    <img ng-src="app\assets\img\sidebar\sidebar_add_qr_{{isActive('/saveqrcode')}}.svg" class="sidebar-icon">
+                </div>
+                <div class="navigation-group-icn-text">
+                    <label class="small-headline sidebar-item-header {{isActive('/saveqrcode') ? 'sidebar-selected-title' : ''}}">Create</label><br>
+                </div> 
+            </a>
+            <div class="nav-side-bar-separator"></div>
+            <a class="list-group-item sidebar-group" href="#/inbox?qrcode_id=&qrcode_name=">
+                <div class="navigation-group-icn-image">
+                    <img ng-src="app\assets\img\sidebar\sidebar_inbox_{{isActive('/inbox')}}.svg" class="sidebar-icon">
+                </div>
+                <div class="navigation-group-icn-text">
+                    <label class="small-headline sidebar-item-header {{isActive('/inbox') ? 'sidebar-selected-title' : ''}}">Inbox</label><br>
+                </div> 
+            </a>
+            <div class="nav-side-bar-separator"></div>
+            <a class="list-group-item sidebar-group" href="#/qrcodelist">
+                <div class="navigation-group-icn-image">
+                    <img ng-src="app\assets\img\sidebar\sidebar_list_of_qr_{{isActive('/qrcodelist')}}.svg" class="sidebar-icon">
+                </div>
+                <div class="navigation-group-icn-text">
+                    <label class="small-headline sidebar-item-header {{isActive('/qrcodelist') ? 'sidebar-selected-title' : ''}}">Items</label><br>
+                </div> 
+            </a>
+            <div class="nav-side-bar-separator"></div>
+            <a class="list-group-item sidebar-group" href="#/setting">
+                <div class="navigation-group-icn-image">
+                    <img ng-src="app\assets\img\sidebar\sidebar_guide_{{isActive('/setting')}}.svg" class="sidebar-icon">
+                </div>
+                <div class="navigation-group-icn-text">
+                    <label class="small-headline sidebar-item-header {{isActive('/setting') ? 'sidebar-selected-title' : ''}}">Profile</label><br>
+                </div> 
+            </a>
+            <div class="nav-side-bar-separator"></div>
+            <a class="list-group-item sidebar-group" href="#/guide">
+                <div class="navigation-group-icn-image">
+                    <img ng-src="app\assets\img\sidebar\sidebar_settings_{{isActive('/guide')}}.svg" class="sidebar-icon">
+                </div>
+                <div class="navigation-group-icn-text">
+                    <label class="small-headline sidebar-item-header {{isActive('/guide') ? 'sidebar-selected-title' : ''}}">Guide</label><br>
+                </div> 
+            </a>
+            <div class="nav-side-bar-separator"></div>
+            <a class="list-group-item sidebar-group" href="#/about">
+                <div class="navigation-group-icn-image">
+                    <img ng-src="app\assets\img\sidebar\sidebar_about_{{isActive('/about')}}.svg" class="sidebar-icon">
+                </div>
+                <div class="navigation-group-icn-text">
+                    <label  class="small-headline sidebar-item-header {{isActive('/about') ? 'sidebar-selected-title' : ''}}">About</label><br>
+                </div> 
+            </a>
+            <div class="nav-side-bar-separator"></div>
+            <div style="position: fixed;
+            bottom: 60px; margin-left: 15%;color:white;">Share us on your facebook page.</div>
+            <a class="facebook-share-button" style="color:white;" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.dropmenote.com%2F&amp;src=sdkpreparse" target="_blank">
+                <img ng-src="app\assets\img\facebook_icon.svg" class="sidebar-icon" style="width: 25px;
+                height: 25px;
+                padding-right: 5px;">Share</a>
+
+        </div>
+    </div>
+</div>
