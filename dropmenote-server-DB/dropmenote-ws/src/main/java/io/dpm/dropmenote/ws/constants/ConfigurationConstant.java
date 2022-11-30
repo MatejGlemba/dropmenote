@@ -36,7 +36,7 @@ public class ConfigurationConstant {
 
 	////////////////////////////////////////////////////
 	//junta.pl
-	public static final String MATRIX_SERVER = "matrix.dropmenote.com"; //https://matrix.dropmenote.com/
+	public static final String MATRIX_SERVER = "https://matrix.dropmenote.com/";
 	public static final String WEBSOCKET_DATE_FORMAT = "dd. MMM yyyy HH:mm:ss";
 	public static final String WEBSOCKET_DATE_TIMEZONE = "Europe/Bratislava";
 
